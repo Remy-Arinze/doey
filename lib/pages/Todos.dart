@@ -22,7 +22,7 @@ class _TodosState extends State<Todos> {
   var userBox = Hive.box('User');
 
   String tag = '';
-  String Name = 'User';
+  var User = 'User';
   List todoList = [];
 
   checkFlag(flag) {
@@ -88,11 +88,28 @@ class _TodosState extends State<Todos> {
       setState(() {});
     } else {
       print('Task is not done');
+
+      SnackBar snackar = SnackBar(
+          margin: EdgeInsets.only(right: 20, left: 20),
+          behavior: SnackBarBehavior.floating,
+          dismissDirection: DismissDirection.startToEnd,
+          duration: Duration(milliseconds: 1500),
+          elevation: 1,
+          content: Container(
+            child: Text(
+              'Task is not done',
+              style: TextStyle(color: Colors.white),
+            ),
+          ));
+
+      ScaffoldMessenger.of(context).showSnackBar(snackar);
     }
   }
 
   getDetails() async {
-    Name = await userBox.get('Name');
+    var name = await userBox.get('user');
+    print(name);
+    User = name['name'];
     setState(() {});
   }
 
@@ -126,6 +143,7 @@ class _TodosState extends State<Todos> {
         borderRadius: const BorderRadius.all(Radius.circular(16)),
       ),
       child: Scaffold(
+        backgroundColor: kAccentColor,
         appBar: AppBar(
           backgroundColor: Color.fromARGB(255, 255, 255, 255),
           leading: IconButton(
@@ -137,8 +155,14 @@ class _TodosState extends State<Todos> {
                 color: Colors.black,
               )),
         ),
-        body: Padding(
-          padding: const EdgeInsets.only(top: 10.0, right: 15, left: 15),
+        body: Container(
+          height: MediaQuery.of(context).size.height * 0.81,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(40),
+                  bottomRight: Radius.circular(40))),
+          padding: const EdgeInsets.only(top: 10.0, right: 20, left: 20),
           child: todoList.isEmpty
               ? Center(
                   child: Row(
@@ -153,25 +177,21 @@ class _TodosState extends State<Todos> {
                   itemCount: todoList.length + 2,
                   itemBuilder: ((context, index) {
                     if (index == 0) {
-                      return Card(
-                        shadowColor: Colors.white,
-                        elevation: 0,
-                        child: Container(
-                          margin: EdgeInsets.only(bottom: 30),
-                          padding: EdgeInsets.only(left: 5),
-                          alignment: Alignment.centerLeft,
-                          height: 70,
-                          child: Column(
-                            children: [
-                              Text(
-                                'Hello ${Name}!',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                            ],
-                          ),
+                      return Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        padding: EdgeInsets.only(left: 5, top: 20),
+                        alignment: Alignment.centerLeft,
+                        height: 70,
+                        child: Column(
+                          children: [
+                            Text(
+                              'Hello ${User}!',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                          ],
                         ),
                       );
                     }
@@ -211,15 +231,13 @@ class _TodosState extends State<Todos> {
           child: const Icon(Icons.add),
         ),
       ),
-      drawer: drawerChild(Name: Name),
+      drawer: drawerChild(Name: User),
     );
   }
 
   Future<dynamic> showModal(BuildContext context, index, [todoList]) {
-    return showModalBottomSheet(
+    return showDialog(
         context: context,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         builder: (context) {
           return modalContainer(
             updateTodo: updateTodos,

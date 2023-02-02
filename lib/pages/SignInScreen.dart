@@ -15,9 +15,10 @@ class _DetailsState extends State<Details> {
   final TextEditingController _controller = TextEditingController();
   String errMsg = '';
   registerName() async {
+    Map user = {'name': _controller.text, 'image': ''};
     var userBox = await Hive.box('User');
     if (_controller.text.isNotEmpty) {
-      userBox.put('Name', _controller.text);
+      await userBox.put('user', user);
       Navigator.pushReplacementNamed(context, '/todos');
     } else {
       errMsg = 'Please enter a name';

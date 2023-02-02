@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:doey/utils/constants.dart';
+import 'package:doey/widgets/Global/constants.dart';
 import 'package:flutter/material.dart';
 
 class modalContainer extends StatefulWidget {
@@ -25,8 +26,8 @@ class modalContainer extends StatefulWidget {
 }
 
 class _modalContainerState extends State<modalContainer> {
-  Color colorUrgent = Colors.grey;
-  Color colorImportant = Colors.grey;
+  Color colorUrgent = kAccentBtn;
+  Color colorImportant = kAccentBtn;
 
   checkUpdate() {
     if (widget.todoList != null) {
@@ -39,33 +40,33 @@ class _modalContainerState extends State<modalContainer> {
 
   selectButtons(btnValue) {
     if (btnValue == 'Urgent') {
-      if (colorUrgent == Colors.grey) {
+      if (colorUrgent == kAccentBtn) {
         widget.updateFlag('Urgent');
 
         setState(() {
-          colorImportant = Colors.grey;
+          colorImportant = kAccentBtn;
           colorUrgent = Colors.red;
         });
       } else {
         setState(() {
           widget.updateFlag('Normal');
-
-          colorUrgent = Colors.grey;
+          colorUrgent = kAccentBtn;
         });
       }
-    } else {
-      if (colorImportant == Colors.grey) {
+    }
+    if (btnValue == 'Important') {
+      if (colorImportant == kAccentBtn) {
         widget.updateFlag('Important');
 
         setState(() {
           colorImportant = Colors.yellow;
-          colorUrgent = Colors.grey;
+          colorUrgent = kAccentBtn;
         });
       } else {
         setState(() {
           widget.updateFlag('Normal');
 
-          colorImportant = Colors.grey;
+          colorImportant = kAccentBtn;
         });
       }
     }
@@ -80,71 +81,80 @@ class _modalContainerState extends State<modalContainer> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(right: 20, left: 20, top: 40, bottom: 100),
-      height: 400,
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10), topRight: Radius.circular(10))),
-      child: Column(children: [
-        TextField(
-          controller: widget.controller,
-          decoration: InputDecoration(
-              hintText: 'Add Todo',
-              hintStyle: TextStyle(fontStyle: FontStyle.italic)),
+    return Dialog(
+      child: Container(
+        padding: EdgeInsets.only(
+          right: 20,
+          left: 20,
+          top: 40,
         ),
-        SizedBox(height: 50),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.5,
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    MaterialButton(
-                      elevation: 0,
-                      color: colorUrgent,
-                      onPressed: () {
-                        selectButtons('Urgent');
-                      },
-                      child: Text(
-                        '#Urgent',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    MaterialButton(
-                      color: colorImportant,
-                      onPressed: () {
-                        selectButtons('Important');
-                      },
-                      child: Text(
-                        '#Important',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
-                  ]),
+        height: MediaQuery.of(context).size.height * 0.30,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+        child: Column(children: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: TextField(
+              controller: widget.controller,
+              decoration: InputDecoration(
+                  hintText: 'Add Todo',
+                  hintStyle: TextStyle(fontStyle: FontStyle.italic)),
             ),
-            IconButton(
+          ),
+          SizedBox(height: 40),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              MaterialButton(
+                height: 25,
+                elevation: 0,
+                color: colorUrgent,
                 onPressed: () {
-                  if (widget.todoList == null) {
-                    widget.addTodo();
-                    Navigator.pop(context);
-                  } else {
-                    widget.updateTodo(widget.index);
-                    Navigator.pop(context);
-                  }
+                  selectButtons('Urgent');
                 },
-                icon: Icon(
-                  Icons.send,
-                  size: 40,
-                  color: kAccentColor,
-                )),
-          ],
-        )
-      ]),
+                child: Text(
+                  '#Urgent',
+                  style: TextStyle(color: Colors.white, fontSize: 10),
+                ),
+              ),
+              SizedBox(width: 15),
+              MaterialButton(
+                height: 25,
+                color: colorImportant,
+                onPressed: () {
+                  selectButtons('Important');
+                },
+                child: Text(
+                  '#Important',
+                  style: TextStyle(color: Colors.black, fontSize: 10),
+                ),
+              ),
+              SizedBox(width: 50),
+              Expanded(
+                child: IconButton(
+                    onPressed: () {
+                      if (widget.todoList == null) {
+                        if (widget.controller.text.isNotEmpty) {
+                          widget.addTodo();
+                          Navigator.pop(context);
+                        }
+                      } else {
+                        widget.updateTodo(widget.index);
+                        Navigator.pop(context);
+                      }
+                    },
+                    icon: Icon(
+                      Icons.send,
+                      size: 30,
+                      color: kAccentColor,
+                    )),
+              ),
+            ],
+          )
+        ]),
+      ),
     );
   }
 }

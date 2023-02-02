@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   checkIn() async {
-    var check = userBox.get('Name');
+    var check = userBox.get('user');
     if (check == null) {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => Details()));
