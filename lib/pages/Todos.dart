@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
+import 'package:doey/widgets/Global/constants.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:doey/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -131,7 +132,7 @@ class _TodosState extends State<Todos> {
   @override
   Widget build(BuildContext context) {
     return AdvancedDrawer(
-      backdropColor: Color(0xff4361ee),
+      backdropColor: kPrimaryColor,
       controller: _advancedDrawerController,
       animationCurve: Curves.easeInOut,
       animationDuration: const Duration(milliseconds: 300),
@@ -156,7 +157,6 @@ class _TodosState extends State<Todos> {
               )),
         ),
         body: Container(
-          height: MediaQuery.of(context).size.height * 0.81,
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
@@ -178,10 +178,9 @@ class _TodosState extends State<Todos> {
                   itemBuilder: ((context, index) {
                     if (index == 0) {
                       return Container(
-                        margin: EdgeInsets.only(bottom: 10),
                         padding: EdgeInsets.only(left: 5, top: 20),
                         alignment: Alignment.centerLeft,
-                        height: 70,
+                        height: 50,
                         child: Column(
                           children: [
                             Text(
@@ -199,8 +198,11 @@ class _TodosState extends State<Todos> {
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 10.0, top: 25),
                         child: Text(
-                          'Tasks',
-                          style: TextStyle(color: kAccentColor),
+                          'Today',
+                          style: TextStyle(
+                              color: kAccentColor,
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold),
                         ),
                       );
                     }
@@ -220,7 +222,7 @@ class _TodosState extends State<Todos> {
                   })),
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Color(0xff4361ee),
+          backgroundColor: kPrimaryColor,
           onPressed: () {
             showModal(
               context,

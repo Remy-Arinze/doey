@@ -59,16 +59,15 @@ class TodoTile extends StatelessWidget {
           icon: Icons.delete,
         )
       ]),
-      child: Card(
-        shadowColor: Colors.white,
-        color: Colors.white,
-        margin: EdgeInsets.only(bottom: 8, right: 5, left: 5),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
         child: ListTile(
           leading: Checkbox(
             fillColor: checktag(tag),
             value: isDone,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(60),
+                side: BorderSide(width: 2.0, style: BorderStyle.none)),
             onChanged: (value) {
               changeValue(todos, value);
             },

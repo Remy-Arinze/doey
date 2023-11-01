@@ -38,25 +38,35 @@ class _DetailsState extends State<Details> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextField(
+                showCursor: true,
                 controller: _controller,
-                decoration: InputDecoration(hintText: 'Name'),
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'What is your name ?',
+                    hintStyle: TextStyle(fontSize: 12)),
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 20),
               errMsg != ''
                   ? Text(
                       errMsg,
                       style: TextStyle(color: Colors.red),
                     )
                   : SizedBox(),
-              MaterialButton(
-                onPressed: () {
-                  registerName();
-                },
-                splashColor: kAccentColor,
-                color: kAccentColor,
-                child: Text(
-                  'Continue',
-                  style: TextStyle(color: Colors.white),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: ElevatedButton(
+                  onPressed: () {
+                    registerName();
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(kAccentColor),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0))),
+                  ),
+                  child: Text(
+                    'Continue',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               )
             ],

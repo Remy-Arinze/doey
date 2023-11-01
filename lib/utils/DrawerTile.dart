@@ -1,11 +1,15 @@
+import 'package:doey/utils/constants.dart';
+import 'package:doey/widgets/Global/constants.dart';
 import 'package:flutter/material.dart';
 
 import '../pages/Archives.dart';
 
 class DrawerTile extends StatefulWidget {
   String title;
+  Color? color;
   Widget icon;
   DrawerTile({
+    this.color,
     required this.title,
     required this.icon,
     Key? key,
@@ -43,14 +47,17 @@ class _DrawerTileState extends State<DrawerTile>
 
   @override
   Widget build(BuildContext context) {
+    print({widget.title: widget.color});
     return InkWell(
       onTap: () {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => Archive()));
       },
       child: Card(
+        color: kLinkColor,
         child: ListTile(
           leading: CircleAvatar(
+            backgroundColor: widget.color != null ? widget.color : Colors.blue,
             radius: 15,
             child: widget.icon,
           ),

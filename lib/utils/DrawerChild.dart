@@ -107,17 +107,19 @@ class _drawerChildState extends State<drawerChild> {
           height: 50,
         ),
         DrawerTile(
-          title: 'Archives',
-          icon: Icon(
-            Icons.archive,
-            size: 15,
-          ),
-        ),
-        DrawerTile(
+          color: Colors.green,
           title: 'Done',
           icon: Icon(
             Icons.check,
             size: 15,
+          ),
+        ),
+        DrawerTile(
+          title: 'Archives',
+          icon: Icon(
+            Icons.archive,
+            size: 15,
+            color: Colors.white,
           ),
         ),
       ]),
