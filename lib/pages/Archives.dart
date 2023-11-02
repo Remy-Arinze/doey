@@ -13,8 +13,11 @@ class _ArchiveState extends State<Archive> {
 
   getArchives() async {
     var archive = await Hive.box('Archives');
-    Archives = archive.get('archiveList');
-    setState(() {});
+    if (archive != null) {
+      Archives = archive.get('archiveList');
+      setState(() {});
+    }
+    ;
   }
 
   @override

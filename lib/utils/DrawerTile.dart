@@ -25,8 +25,8 @@ class _DrawerTileState extends State<DrawerTile>
   late Animation _fadeAnimation;
 
   animate() {
-    _controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    _controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
     _fadeAnimation = Tween<double>(
       begin: 0,
       end: 1,
@@ -47,21 +47,34 @@ class _DrawerTileState extends State<DrawerTile>
 
   @override
   Widget build(BuildContext context) {
-    print({widget.title: widget.color});
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Archive()));
-      },
-      child: Card(
-        color: kLinkColor,
-        child: ListTile(
-          leading: CircleAvatar(
-            backgroundColor: widget.color != null ? widget.color : Colors.blue,
-            radius: 15,
-            child: widget.icon,
+    return Expanded(
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Archive()));
+        },
+        child: Card(
+          color: kPrimaryColor,
+          child: ListTile(
+            horizontalTitleGap: 1,
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 10,
+                  child: Text(
+                    '3',
+                    style: TextStyle(color: kPrimaryColor),
+                  ),
+                ),
+                SizedBox(height: 8),
+                Text(widget.title,
+                    style: const TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.w500)),
+              ],
+            ),
           ),
-          title: Text(widget.title),
         ),
       ),
     );

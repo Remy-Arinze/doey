@@ -3,10 +3,12 @@
 import 'package:doey/utils/constants.dart';
 import 'package:doey/widgets/Global/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:doey/widgets/Input/TextBox.dart';
 
 class modalContainer extends StatefulWidget {
   TextEditingController controller;
   var todoList;
+  var time;
   var index;
   var addTodo;
   var updateFlag;
@@ -14,6 +16,7 @@ class modalContainer extends StatefulWidget {
   modalContainer({
     required this.controller,
     this.todoList,
+    this.time,
     this.index,
     this.updateTodo,
     this.updateFlag,
@@ -28,6 +31,12 @@ class modalContainer extends StatefulWidget {
 class _modalContainerState extends State<modalContainer> {
   Color colorUrgent = kAccentBtn;
   Color colorImportant = kAccentBtn;
+  Color colorToday = kAccentBtn;
+  Color colorTommorow = kAccentBtn;
+  Color textColorImportant = Colors.black;
+  Color textColorUrgent = Colors.black;
+  Color todayTextColor = Colors.black;
+  Color tomorrowTextColor = Colors.black;
 
   checkUpdate() {
     if (widget.todoList != null) {
@@ -46,11 +55,14 @@ class _modalContainerState extends State<modalContainer> {
         setState(() {
           colorImportant = kAccentBtn;
           colorUrgent = Colors.red;
+          textColorUrgent = Colors.white;
+          textColorImportant = Colors.black;
         });
       } else {
         setState(() {
           widget.updateFlag('Normal');
           colorUrgent = kAccentBtn;
+          textColorUrgent = Colors.black;
         });
       }
     }
@@ -59,14 +71,37 @@ class _modalContainerState extends State<modalContainer> {
         widget.updateFlag('Important');
 
         setState(() {
-          colorImportant = Colors.yellow;
+          colorImportant = Color.fromARGB(255, 194, 97, 0);
           colorUrgent = kAccentBtn;
+          textColorUrgent = Colors.black;
+          textColorImportant = Colors.white;
         });
       } else {
         setState(() {
           widget.updateFlag('Normal');
 
           colorImportant = kAccentBtn;
+        });
+      }
+    }
+
+    if (btnValue == 'Today') {
+      if (colorToday == kAccentBtn) {
+        setState(() {
+          colorToday = kPrimaryColor;
+          colorTommorow = kAccentBtn;
+          todayTextColor = Colors.white;
+          tomorrowTextColor = Colors.black;
+        });
+      }
+    }
+    if (btnValue == 'Tomorrow') {
+      if (colorTommorow == kAccentBtn) {
+        setState(() {
+          colorToday = kAccentBtn;
+          colorTommorow = kPrimaryColor;
+          todayTextColor = Colors.black;
+          tomorrowTextColor = Colors.white;
         });
       }
     }
@@ -82,30 +117,28 @@ class _modalContainerState extends State<modalContainer> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      backgroundColor: Color.fromARGB(255, 244, 244, 244),
       child: Container(
         padding: EdgeInsets.only(
-          right: 20,
-          left: 20,
-          top: 40,
+          right: 10,
+          left: 10,
+          top: 30,
         ),
-        height: MediaQuery.of(context).size.height * 0.30,
+        height: MediaQuery.of(context).size.height * 0.35,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10), topRight: Radius.circular(10))),
         child: Column(children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: TextField(
-              showCursor: true,
-              controller: widget.controller,
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: 'Add Todo',
-                  hintStyle: TextStyle(fontSize: 12)),
-            ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 5),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10), color: Colors.white),
+            child: Column(children: [
+              TextBox(hint: 'Add todo', controller: widget.controller),
+            ]),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 30),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -114,37 +147,57 @@ class _modalContainerState extends State<modalContainer> {
                 style: TextStyle(color: Colors.grey),
               ),
               SizedBox(width: 20),
-              MaterialButton(
-                height: 25,
-                minWidth: 50,
-                elevation: 0,
-                color: colorUrgent,
-                onPressed: () {
-                  selectButtons('Urgent');
-                },
-                child: Text(
-                  '#Urgent',
-                  style: TextStyle(color: Colors.white, fontSize: 10),
-                ),
-              ),
+              selectButton(
+                  width: 68.0,
+                  title: 'Urgent',
+                  textColor: textColorUrgent,
+                  color: colorUrgent),
               SizedBox(width: 18),
-              MaterialButton(
-                height: 25,
-                minWidth: 50,
-                color: colorImportant,
-                onPressed: () {
-                  selectButtons('Important');
-                },
-                child: Text(
-                  '#Important',
-                  style: TextStyle(color: Colors.black, fontSize: 10),
-                ),
-              ),
+              selectButton(
+                  width: 80.0,
+                  title: 'Important',
+                  textColor: textColorImportant,
+                  color: colorImportant),
               SizedBox(width: 20),
             ],
           ),
           SizedBox(
-            height: 35,
+            height: 20,
+          ),
+          Row(
+            children: [
+              Text('Time', style: TextStyle(color: Colors.grey)),
+              SizedBox(width: 20),
+              selectButton(
+                  title: 'Today', color: colorToday, textColor: todayTextColor),
+              SizedBox(width: 20),
+              selectButton(
+                  title: 'Tomorrow',
+                  color: colorTommorow,
+                  textColor: tomorrowTextColor),
+              SizedBox(width: 20),
+              IconButton(
+                  onPressed: () async {
+                    DateTime? pickDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2005),
+                        lastDate: DateTime(2100));
+
+                    if (pickDate != null) {
+                      print(DateTime.now());
+                      setState(() {
+                        widget.time = pickDate;
+                      });
+                    } else {}
+                  },
+                  icon: Icon(
+                    Icons.calendar_month,
+                  ))
+            ],
+          ),
+          SizedBox(
+            height: 25,
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.9,
@@ -172,6 +225,30 @@ class _modalContainerState extends State<modalContainer> {
             ),
           )
         ]),
+      ),
+    );
+  }
+
+  Widget selectButton({
+    String title = '',
+    Color textColor = Colors.black,
+    color,
+    width,
+  }) {
+    return SizedBox(
+      width: width,
+      height: 20.0,
+      child: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(color),
+        ),
+        onPressed: () {
+          selectButtons(title);
+        },
+        child: Text(
+          title,
+          style: TextStyle(color: textColor, fontSize: 10),
+        ),
       ),
     );
   }

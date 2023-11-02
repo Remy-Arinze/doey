@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
+import 'package:doey/utils/Checktime.dart';
 import 'package:doey/widgets/Global/constants.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:doey/utils/constants.dart';
@@ -23,12 +24,15 @@ class _TodosState extends State<Todos> {
   var userBox = Hive.box('User');
 
   String tag = '';
+  String date = '';
   var User = 'User';
   List todoList = [];
 
   checkFlag(flag) {
     tag = flag;
   }
+
+  selectDate() {}
 
   doTodo(todoIndex, value) {
     todoIndex['done'] = value;
@@ -132,7 +136,7 @@ class _TodosState extends State<Todos> {
   @override
   Widget build(BuildContext context) {
     return AdvancedDrawer(
-      backdropColor: kPrimaryColor,
+      backdropColor: kBackgroundColor,
       controller: _advancedDrawerController,
       animationCurve: Curves.easeInOut,
       animationDuration: const Duration(milliseconds: 300),
@@ -146,7 +150,7 @@ class _TodosState extends State<Todos> {
       child: Scaffold(
         backgroundColor: kAccentColor,
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 255, 255, 255),
+          backgroundColor: kBackgroundColor,
           leading: IconButton(
               onPressed: () {
                 _handleMenuButtonPressed();
@@ -158,10 +162,8 @@ class _TodosState extends State<Todos> {
         ),
         body: Container(
           decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(40),
-                  bottomRight: Radius.circular(40))),
+            color: kBackgroundColor,
+          ),
           padding: const EdgeInsets.only(top: 10.0, right: 20, left: 20),
           child: todoList.isEmpty
               ? Center(
@@ -180,23 +182,25 @@ class _TodosState extends State<Todos> {
                       return Container(
                         padding: EdgeInsets.only(left: 5, top: 20),
                         alignment: Alignment.centerLeft,
-                        height: 50,
+                        height: 80,
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Hello ${User}!',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.w700),
+                              'Today ${DateTime.now().toString().substring(0, 10)}',
+                              style: TextStyle(fontSize: 12),
                             ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            timeOfDay(User),
                           ],
                         ),
                       );
                     }
                     if (index == 1) {
                       return Padding(
-                        padding: const EdgeInsets.only(bottom: 10.0, top: 25),
+                        padding: const EdgeInsets.only(bottom: 10.0, top: 40),
                         child: Text(
                           'Today',
                           style: TextStyle(

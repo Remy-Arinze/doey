@@ -1,10 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:doey/utils/constants.dart';
+import 'package:doey/widgets/Global/constants.dart';
+import 'package:doey/widgets/Input/PopUp.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import '../pages/Todos.dart';
+import 'package:doey/widgets/Input/TextBox.dart';
 import 'DrawerTile.dart';
 
 class drawerChild extends StatefulWidget {
@@ -20,6 +24,7 @@ class drawerChild extends StatefulWidget {
 
 class _drawerChildState extends State<drawerChild> {
   late Uint8List selectedImage;
+  final TextEditingController _controller = new TextEditingController();
   var myBox = Hive.box('User');
 
   Uint8List? imageString;
@@ -70,8 +75,11 @@ class _drawerChildState extends State<drawerChild> {
               child: imageString == null
                   ? CircleAvatar(
                       radius: 30,
-                      backgroundColor: Colors.white,
-                      child: Icon(Icons.person))
+                      backgroundColor: kAccentBtn,
+                      child: Icon(
+                        Icons.person,
+                        color: Colors.white,
+                      ))
                   : Container(
                       height: 60,
                       width: 60,
@@ -104,24 +112,95 @@ class _drawerChildState extends State<drawerChild> {
           ],
         ),
         SizedBox(
+          height: 30,
+        ),
+        Row(
+          children: [
+            DrawerTile(
+              color: kPrimaryColor,
+              title: 'Completed',
+              icon: Icon(
+                Icons.check,
+                size: 15,
+              ),
+            ),
+            DrawerTile(
+              color: kPrimaryColor,
+              title: 'Archived',
+              icon: Icon(
+                Icons.archive,
+                size: 15,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
           height: 50,
         ),
-        DrawerTile(
-          color: Colors.green,
-          title: 'Done',
-          icon: Icon(
-            Icons.check,
-            size: 15,
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Projects', style: kTitleStyle),
+            popUp(context, controller: _controller),
+          ],
         ),
-        DrawerTile(
-          title: 'Archives',
-          icon: Icon(
-            Icons.archive,
-            size: 15,
-            color: Colors.white,
-          ),
+        SizedBox(height: 5),
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.2,
+          width: MediaQuery.of(context).size.width,
+          child: ListView.builder(
+              itemCount: mockArray.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  margin: EdgeInsets.only(bottom: 5),
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 255, 255, 255),
+                  ),
+                  child: ListTile(
+                    title: Text(
+                      '${mockArray[index]['name']},',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    trailing: CircleAvatar(
+                        radius: 8,
+                        backgroundColor: mockArray[index]['color'] as Color),
+                  ),
+                );
+              }),
         ),
+        SizedBox(
+          height: 30,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Labels',
+              style: kTitleStyle,
+            ),
+            popUp(context, controller: _controller),
+          ],
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.25,
+          child: GridView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: mockArray.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisSpacing: 20,
+                crossAxisCount: 2,
+                mainAxisSpacing: 30,
+              ),
+              itemBuilder: (context, index) {
+                return ListTile(
+                  tileColor: Colors.white,
+                  title: Text('${mockArray[index]['name']}'),
+                );
+              }),
+        )
       ]),
     ));
   }
