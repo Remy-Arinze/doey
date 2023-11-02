@@ -10,14 +10,17 @@ class modalContainer extends StatefulWidget {
   var todoList;
   var time;
   var index;
+
   var addTodo;
   var updateFlag;
+  var updateDateTime;
   var updateTodo;
   modalContainer({
     required this.controller,
     this.todoList,
     this.time,
     this.index,
+    this.updateDateTime,
     this.updateTodo,
     this.updateFlag,
     required this.addTodo,
@@ -37,6 +40,8 @@ class _modalContainerState extends State<modalContainer> {
   Color textColorUrgent = Colors.black;
   Color todayTextColor = Colors.black;
   Color tomorrowTextColor = Colors.black;
+
+  var selectedDate;
 
   checkUpdate() {
     if (widget.todoList != null) {
@@ -87,6 +92,9 @@ class _modalContainerState extends State<modalContainer> {
 
     if (btnValue == 'Today') {
       if (colorToday == kAccentBtn) {
+        selectedDate = DateTime.now().toIso8601String();
+        print(selectedDate);
+        // widget.updateDateTime(selectedDate);
         setState(() {
           colorToday = kPrimaryColor;
           colorTommorow = kAccentBtn;
@@ -96,6 +104,8 @@ class _modalContainerState extends State<modalContainer> {
       }
     }
     if (btnValue == 'Tomorrow') {
+      selectedDate = DateTime.now().add(Duration(days: 1)).toIso8601String();
+      print(selectedDate);
       if (colorTommorow == kAccentBtn) {
         setState(() {
           colorToday = kAccentBtn;
@@ -185,9 +195,9 @@ class _modalContainerState extends State<modalContainer> {
                         lastDate: DateTime(2100));
 
                     if (pickDate != null) {
-                      print(DateTime.now());
                       setState(() {
-                        widget.time = pickDate;
+                        selectedDate = pickDate.toIso8601String();
+                        print(selectedDate);
                       });
                     } else {}
                   },

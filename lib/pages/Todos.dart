@@ -25,6 +25,7 @@ class _TodosState extends State<Todos> {
 
   String tag = '';
   String date = '';
+  var time = '';
   var User = 'User';
   List todoList = [];
 
@@ -32,11 +33,14 @@ class _TodosState extends State<Todos> {
     tag = flag;
   }
 
+  updateDateTime(dt) {
+    date = dt;
+  }
+
   selectDate() {}
 
   doTodo(todoIndex, value) {
     todoIndex['done'] = value;
-    print('done');
     setState(() {});
   }
 
@@ -45,11 +49,14 @@ class _TodosState extends State<Todos> {
       'title': _controller.text,
       'done': false,
       'tag': tag,
+      'date': date,
+      time: time
     };
     todoList.add(todo);
     await myBox.put('todoList', todoList);
     _controller.clear();
     tag = '';
+    date = '';
     setState(() {});
   }
 
@@ -64,6 +71,7 @@ class _TodosState extends State<Todos> {
       'title': _controller.text,
       'done': false,
       'tag': tag,
+      'dateTime': date
     };
     for (int i = 0; i < todoList.length; i++) {
       if (i == todoIndex) {
@@ -74,6 +82,7 @@ class _TodosState extends State<Todos> {
     await myBox.put('todoList', todoList);
     _controller.clear();
     tag = '';
+    date = '';
     setState(() {});
   }
 
@@ -251,6 +260,7 @@ class _TodosState extends State<Todos> {
             controller: _controller,
             todoList: todoList,
             index: index,
+            updateDateTime: updateDateTime,
             addTodo: addTodo,
           );
         });
