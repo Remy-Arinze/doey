@@ -10,7 +10,7 @@ class modalContainer extends StatefulWidget {
   var todoList;
   var time;
   var index;
-
+  var reshuffleList;
   var addTodo;
   var updateFlag;
   var updateDateTime;
@@ -19,6 +19,7 @@ class modalContainer extends StatefulWidget {
     required this.controller,
     this.todoList,
     this.time,
+    this.reshuffleList,
     this.index,
     this.updateDateTime,
     this.updateTodo,
@@ -92,9 +93,9 @@ class _modalContainerState extends State<modalContainer> {
 
     if (btnValue == 'Today') {
       if (colorToday == kAccentBtn) {
-        selectedDate = DateTime.now().toIso8601String();
+        selectedDate = DateUtils.dateOnly(DateTime.now()).toIso8601String();
         print(selectedDate);
-        // widget.updateDateTime(selectedDate);
+        widget.updateDateTime(selectedDate);
         setState(() {
           colorToday = kPrimaryColor;
           colorTommorow = kAccentBtn;
@@ -104,8 +105,10 @@ class _modalContainerState extends State<modalContainer> {
       }
     }
     if (btnValue == 'Tomorrow') {
-      selectedDate = DateTime.now().add(Duration(days: 1)).toIso8601String();
-      print(selectedDate);
+      selectedDate = DateUtils.dateOnly(DateTime.now())
+          .add(Duration(days: 1))
+          .toIso8601String();
+      widget.updateDateTime(selectedDate);
       if (colorTommorow == kAccentBtn) {
         setState(() {
           colorToday = kAccentBtn;
@@ -197,7 +200,7 @@ class _modalContainerState extends State<modalContainer> {
                     if (pickDate != null) {
                       setState(() {
                         selectedDate = pickDate.toIso8601String();
-                        print(selectedDate);
+                        widget.updateDateTime(selectedDate);
                       });
                     } else {}
                   },
@@ -221,10 +224,13 @@ class _modalContainerState extends State<modalContainer> {
                 if (widget.todoList == null) {
                   if (widget.controller.text.isNotEmpty) {
                     widget.addTodo();
+                    widget.reshuffleList(widget.index);
                     Navigator.pop(context);
                   }
                 } else {
                   widget.updateTodo(widget.index);
+                  widget.reshuffleList(widget.index);
+
                   Navigator.pop(context);
                 }
               },

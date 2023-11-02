@@ -50,10 +50,10 @@ class _TodosState extends State<Todos> {
       'done': false,
       'tag': tag,
       'date': date,
-      time: time
+      'time': time
     };
     todoList.add(todo);
-    await myBox.put('todoList', todoList);
+    // await myBox.put('todoList', todoList);
     _controller.clear();
     tag = '';
     date = '';
@@ -66,12 +66,24 @@ class _TodosState extends State<Todos> {
     setState(() {});
   }
 
+  reshuffleOverDueTodos(index) async {
+    for (int i = 0; i < todoList.length; i++) {
+      if (i == index) {
+        final overdueTodo = todoList[i];
+        todoList.removeAt(index);
+        todoList.insert(0, overdueTodo);
+      }
+    }
+    // await myBox.put('todoList', todoList);
+  }
+
   updateTodos(todoIndex) async {
     Map value = {
       'title': _controller.text,
       'done': false,
       'tag': tag,
-      'dateTime': date
+      'date': date,
+      'time': time
     };
     for (int i = 0; i < todoList.length; i++) {
       if (i == todoIndex) {
@@ -79,7 +91,7 @@ class _TodosState extends State<Todos> {
         todoList.insert(todoIndex, value);
       }
     }
-    await myBox.put('todoList', todoList);
+    // await myBox.put('todoList', todoList);
     _controller.clear();
     tag = '';
     date = '';
@@ -228,6 +240,7 @@ class _TodosState extends State<Todos> {
                           index: index - 2,
                           tag: todoList[index - 2]['tag'],
                           changeValue: doTodo,
+                          isOverdue: reshuffleOverDueTodos,
                           isDone: todoList[index - 2]['done'],
                           deleteTodos: deleteTodos,
                           todos: todoList[index - 2]),

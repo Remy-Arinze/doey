@@ -4,10 +4,12 @@ import 'package:doey/widgets/Global/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hive/hive.dart';
+import 'package:moment_dart/moment_dart.dart';
 
 class TodoTile extends StatelessWidget {
   final isDone;
   var archiveTodos;
+  var isOverdue;
   var index;
   var tag;
   var changeValue;
@@ -15,6 +17,7 @@ class TodoTile extends StatelessWidget {
   TodoTile({
     this.index,
     this.tag,
+    this.isOverdue = false,
     required this.isDone,
     this.deleteTodos,
     this.changeValue,
@@ -24,6 +27,37 @@ class TodoTile extends StatelessWidget {
   }) : super(key: key);
 
   final todos;
+
+  Widget isTodoOverdue(i) {
+    if (Moment(DateTime.parse(todos['date'])) < Moment(DateTime.now().date)) {
+      isOverdue(index);
+      return Text(
+        'Overdue',
+        style: TextStyle(fontSize: 10, color: Colors.red),
+      );
+    }
+
+    return SizedBox();
+  }
+
+  Widget formatDate() {
+    if (Moment(DateTime.parse(todos['date'])) == Moment(DateTime.now().date)) {
+      return Text(
+        'Today',
+        style: TextStyle(fontSize: 12),
+      );
+    } else if (Moment(DateTime.parse(todos['date'])) ==
+        Moment(DateTime.now().add(Duration(days: 1)).date)) {
+      return Text(
+        'Tommorow',
+        style: TextStyle(fontSize: 12),
+      );
+    }
+    return Text(
+      '${Moment(DateTime.parse(todos['date'])).LL}',
+      style: TextStyle(fontSize: 12),
+    );
+  }
 
   Widget checktag(tag) {
     if (tag == 'Important') {
@@ -101,10 +135,11 @@ class TodoTile extends StatelessWidget {
                   color: Colors.black,
                   decoration: isDone ? TextDecoration.lineThrough : null),
             ),
-            subtitle: Text(
-              'Date and time',
-              style: TextStyle(fontSize: 12),
-            ),
+            subtitle: Row(children: [
+              formatDate(),
+              SizedBox(width: 5),
+              isTodoOverdue(index)
+            ]),
             trailing: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceAround,

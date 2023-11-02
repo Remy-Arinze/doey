@@ -448,6 +448,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  moment_dart:
+    dependency: "direct main"
+    description:
+      name: moment_dart
+      sha256: c3a1274249a390be01da45030ab0e1d8e465e358cff1b9ab22430d1860b792db
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   package_config:
     dependency: transitive
     description:

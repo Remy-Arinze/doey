@@ -21,6 +21,5 @@ const randomColors = [
 
 final mockArray = [
   {'name': 'Work', 'color': randomColors[0]},
-  {'name': 'School', 'color': randomColors[2]},
-  {'name': 'Study', 'color': randomColors[6]}
+  {'name': 'Study', 'color': randomColors[8]}
 ];

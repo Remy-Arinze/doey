@@ -69,7 +69,6 @@ class _drawerChildState extends State<drawerChild> {
                   var binImage = await image.readAsBytes();
                   selectedImage = binImage;
                   updateImage();
-                  print(selectedImage);
                 }
               },
               child: imageString == null
@@ -100,12 +99,15 @@ class _drawerChildState extends State<drawerChild> {
               children: [
                 Text(
                   widget.Name,
-                  style: TextStyle(color: Colors.white, fontSize: 20),
+                  style: TextStyle(color: Colors.black, fontSize: 18),
                 ),
+                SizedBox(height: 4),
                 Text(
                   DateTime.now().toString().substring(0, 10),
                   style: TextStyle(
-                      color: Color.fromARGB(255, 17, 17, 17), fontSize: 12),
+                    color: kPrimaryColor,
+                    fontSize: 12,
+                  ),
                 )
               ],
             )
@@ -154,6 +156,7 @@ class _drawerChildState extends State<drawerChild> {
                 return Container(
                   margin: EdgeInsets.only(bottom: 5),
                   decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
                     color: Color.fromARGB(255, 255, 255, 255),
                   ),
                   child: ListTile(
