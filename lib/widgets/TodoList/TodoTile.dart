@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:doey/utils/utilityFunctions.dart';
 import 'package:doey/widgets/Global/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -27,54 +28,6 @@ class TodoTile extends StatelessWidget {
   }) : super(key: key);
 
   final todos;
-
-  Widget isTodoOverdue(i) {
-    if (Moment(DateTime.parse(todos['date'])) < Moment(DateTime.now().date)) {
-      isOverdue(index);
-      return Text(
-        'Overdue',
-        style: TextStyle(fontSize: 10, color: Colors.red),
-      );
-    }
-
-    return SizedBox();
-  }
-
-  Widget formatDate() {
-    if (Moment(DateTime.parse(todos['date'])) == Moment(DateTime.now().date)) {
-      return Text(
-        'Today',
-        style: TextStyle(fontSize: 12),
-      );
-    } else if (Moment(DateTime.parse(todos['date'])) ==
-        Moment(DateTime.now().add(Duration(days: 1)).date)) {
-      return Text(
-        'Tommorow',
-        style: TextStyle(fontSize: 12),
-      );
-    }
-    return Text(
-      '${Moment(DateTime.parse(todos['date'])).LL}',
-      style: TextStyle(fontSize: 12),
-    );
-  }
-
-  Widget checktag(tag) {
-    if (tag == 'Important') {
-      return Text(
-        '#important',
-        style: TextStyle(
-            color: const Color.fromARGB(255, 197, 178, 8), fontSize: 10),
-      );
-    } else if (tag == 'Urgent') {
-      return Text(
-        '#Urgent',
-        style: TextStyle(color: Colors.red, fontSize: 10),
-      );
-    } else {
-      return SizedBox();
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +63,7 @@ class TodoTile extends StatelessWidget {
           )
         ]),
         child: Container(
-          margin: EdgeInsets.symmetric(vertical: 10),
+          margin: EdgeInsets.symmetric(vertical: 8),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(20),
@@ -136,26 +89,44 @@ class TodoTile extends StatelessWidget {
                   decoration: isDone ? TextDecoration.lineThrough : null),
             ),
             subtitle: Row(children: [
-              formatDate(),
+              formatDate(todos: todos),
               SizedBox(width: 5),
-              isTodoOverdue(index)
+              isTodoOverdue(index,
+                  todos: todos, index: index, isOverdue: isOverdue)
             ]),
             trailing: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Container(
-                  height: 20,
-                  width: 30,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.purple,
-                  ),
-                ),
-                checktag(tag)
-              ],
+              children: [TodoLabel(), checktag(tag)],
             ),
           ),
         ));
+  }
+}
+
+class TodoLabel extends StatelessWidget {
+  const TodoLabel({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: BoxConstraints(maxHeight: 30, maxWidth: 40),
+      height: 20,
+      padding: EdgeInsets.symmetric(horizontal: 5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+        color: Colors.purple,
+      ),
+      child: Flexible(
+        child: Center(
+          child: Text(
+            'Study',
+            style: TextStyle(color: Colors.white, fontSize: 10),
+          ),
+        ),
+      ),
+    );
   }
 }

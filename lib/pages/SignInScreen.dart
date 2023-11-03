@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:doey/utils/constants.dart';
+import 'package:doey/widgets/Global/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -13,12 +14,14 @@ class Details extends StatefulWidget {
 
 class _DetailsState extends State<Details> {
   final TextEditingController _controller = TextEditingController();
+
   String errMsg = '';
   registerName() async {
     Map user = {'name': _controller.text, 'image': ''};
     var userBox = await Hive.box('User');
     if (_controller.text.isNotEmpty) {
       await userBox.put('user', user);
+
       Navigator.pushReplacementNamed(context, '/todos');
     } else {
       errMsg = 'Please enter a name';

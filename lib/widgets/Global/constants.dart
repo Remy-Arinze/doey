@@ -21,5 +21,11 @@ const randomColors = [
 
 final mockArray = [
   {'name': 'Work', 'color': randomColors[0]},
-  {'name': 'Study', 'color': randomColors[8]}
+  {'name': 'Study', 'color': randomColors[8]},
+  {'name': 'Personal', 'color': randomColors[8]},
+  {'name': 'Habit', 'color': randomColors[8]}
+];
+final projectArray = [
+  {'name': 'Doey App', 'tasks': 5, 'icon': 'tag'},
+  {'name': 'Web Design', 'tasks': 2, 'icon': 'tag'},
 ];

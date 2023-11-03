@@ -151,7 +151,7 @@ class _drawerChildState extends State<drawerChild> {
           height: MediaQuery.of(context).size.height * 0.2,
           width: MediaQuery.of(context).size.width,
           child: ListView.builder(
-              itemCount: mockArray.length,
+              itemCount: projectArray.length,
               itemBuilder: (context, index) {
                 return Container(
                   margin: EdgeInsets.only(bottom: 5),
@@ -161,12 +161,10 @@ class _drawerChildState extends State<drawerChild> {
                   ),
                   child: ListTile(
                     title: Text(
-                      '${mockArray[index]['name']},',
+                      '${projectArray[index]['name']},',
                       style: TextStyle(color: Colors.black),
                     ),
-                    trailing: CircleAvatar(
-                        radius: 8,
-                        backgroundColor: mockArray[index]['color'] as Color),
+                    trailing: Text('${projectArray[index]['tasks']}'),
                   ),
                 );
               }),
@@ -193,14 +191,20 @@ class _drawerChildState extends State<drawerChild> {
               scrollDirection: Axis.horizontal,
               itemCount: mockArray.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisSpacing: 20,
-                crossAxisCount: 2,
-                mainAxisSpacing: 30,
-              ),
+                  crossAxisSpacing: 10,
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 20,
+                  childAspectRatio: 0.8),
               itemBuilder: (context, index) {
-                return ListTile(
-                  tileColor: Colors.white,
-                  title: Text('${mockArray[index]['name']}'),
+                return Center(
+                  child: ListTile(
+                    horizontalTitleGap: 0,
+                    trailing: CircleAvatar(
+                        backgroundColor: mockArray[index]['color'] as Color,
+                        radius: 10),
+                    tileColor: Colors.white,
+                    title: Text('${mockArray[index]['name']}'),
+                  ),
                 );
               }),
         )

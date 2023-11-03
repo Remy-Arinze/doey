@@ -5,6 +5,7 @@ import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:doey/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:moment_dart/moment_dart.dart';
 import '../utils/DrawerChild.dart';
 import '../utils/bottomModal.dart';
 import '../widgets/TodoList/TodoTile.dart';
@@ -26,6 +27,8 @@ class _TodosState extends State<Todos> {
   String tag = '';
   String date = '';
   var time = '';
+  String project = '';
+  String label = '';
   var User = 'User';
   List todoList = [];
 
@@ -50,10 +53,12 @@ class _TodosState extends State<Todos> {
       'done': false,
       'tag': tag,
       'date': date,
-      'time': time
+      'time': time,
+      'todoLabel': label,
+      'project': project
     };
     todoList.add(todo);
-    // await myBox.put('todoList', todoList);
+    await myBox.put('todoList', todoList);
 
     _controller.clear();
     tag = '';
@@ -73,14 +78,9 @@ class _TodosState extends State<Todos> {
   }
 
   reshuffleOverDueTodos(index) async {
-    for (int i = 0; i < todoList.length; i++) {
-      if (i == index) {
-        final overdueTodo = todoList[i];
-        todoList.removeAt(index);
-        todoList.insert(0, overdueTodo);
-      }
-    }
-    // await myBox.put('todoList', todoList);
+    todoList.sort((a, b) => a['date'].compareTo(b['date']));
+
+    await myBox.put('todoList', todoList);
   }
 
   updateTodos(todoIndex) async {
@@ -89,7 +89,9 @@ class _TodosState extends State<Todos> {
       'done': false,
       'tag': tag,
       'date': date,
-      'time': time
+      'time': time,
+      'todoLabel': label,
+      'project': project
     };
     for (int i = 0; i < todoList.length; i++) {
       if (i == todoIndex) {
@@ -97,7 +99,7 @@ class _TodosState extends State<Todos> {
         todoList.insert(todoIndex, value);
       }
     }
-    // await myBox.put('todoList', todoList);
+    await myBox.put('todoList', todoList);
     reshuffleOverDueTodos(todoIndex);
     _controller.clear();
     tag = '';
