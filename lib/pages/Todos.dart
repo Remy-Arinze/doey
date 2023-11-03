@@ -54,9 +54,15 @@ class _TodosState extends State<Todos> {
     };
     todoList.add(todo);
     // await myBox.put('todoList', todoList);
+
     _controller.clear();
     tag = '';
     date = '';
+    for (var i = 0; i < todoList.length; i++) {
+      if (todoList[i]['title'] == todo['title']) {
+        reshuffleOverDueTodos(i);
+      }
+    }
     setState(() {});
   }
 
@@ -92,6 +98,7 @@ class _TodosState extends State<Todos> {
       }
     }
     // await myBox.put('todoList', todoList);
+    reshuffleOverDueTodos(todoIndex);
     _controller.clear();
     tag = '';
     date = '';

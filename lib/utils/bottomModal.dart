@@ -10,7 +10,6 @@ class modalContainer extends StatefulWidget {
   var todoList;
   var time;
   var index;
-  var reshuffleList;
   var addTodo;
   var updateFlag;
   var updateDateTime;
@@ -19,7 +18,6 @@ class modalContainer extends StatefulWidget {
     required this.controller,
     this.todoList,
     this.time,
-    this.reshuffleList,
     this.index,
     this.updateDateTime,
     this.updateTodo,
@@ -224,12 +222,11 @@ class _modalContainerState extends State<modalContainer> {
                 if (widget.todoList == null) {
                   if (widget.controller.text.isNotEmpty) {
                     widget.addTodo();
-                    widget.reshuffleList(widget.index);
+
                     Navigator.pop(context);
                   }
                 } else {
                   widget.updateTodo(widget.index);
-                  widget.reshuffleList(widget.index);
 
                   Navigator.pop(context);
                 }
