@@ -23,6 +23,7 @@ class _TodosState extends State<Todos> {
   final myBox = Hive.box('Todos');
   var archiveBox = Hive.box('Archives');
   var userBox = Hive.box('User');
+  var LinksBox = Hive.box('Links');
 
   String tag = '';
   String date = '';

@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:doey/Adapters/Links.dart';
 import 'package:doey/utils/constants.dart';
 import 'package:doey/widgets/Global/constants.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class Details extends StatefulWidget {
 
 class _DetailsState extends State<Details> {
   final TextEditingController _controller = TextEditingController();
+  var linksBox = Hive.box('Links');
 
   String errMsg = '';
   registerName() async {

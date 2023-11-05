@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:doey/Adapters/Links.dart';
 import 'package:doey/pages/AddNote.dart';
 import 'package:doey/pages/SplashScreen.dart';
 import 'package:doey/pages/Todos.dart';
@@ -8,9 +9,11 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   await Hive.initFlutter();
+  Hive.registerAdapter(Links() as TypeAdapter);
   await Hive.openBox('TODOS');
   await Hive.openBox('Archives');
   await Hive.openBox('User');
+  await Hive.openBox('Links');
   runApp(const MyApp());
 }
 
