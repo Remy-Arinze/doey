@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
 import 'package:doey/utils/Checktime.dart';
+import 'package:doey/utils/createTodoModal.dart';
 import 'package:doey/widgets/Global/constants.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:doey/utils/constants.dart';
@@ -25,9 +26,8 @@ class _TodosState extends State<Todos> {
   var userBox = Hive.box('User');
 
   String tag = '';
-  String date = '';
+  String date = Moment(DateTime.now().date).toIso8601String();
   var time = '';
-  String project = '';
   String label = '';
   var User = 'User';
   List todoList = [];
@@ -54,8 +54,7 @@ class _TodosState extends State<Todos> {
       'tag': tag,
       'date': date,
       'time': time,
-      'todoLabel': label,
-      'project': project
+      'label': label,
     };
     todoList.add(todo);
     await myBox.put('todoList', todoList);
@@ -90,8 +89,7 @@ class _TodosState extends State<Todos> {
       'tag': tag,
       'date': date,
       'time': time,
-      'todoLabel': label,
-      'project': project
+      'label': label,
     };
     for (int i = 0; i < todoList.length; i++) {
       if (i == todoIndex) {
@@ -242,7 +240,14 @@ class _TodosState extends State<Todos> {
                     }
                     return GestureDetector(
                       onTap: () {
-                        showModal(context, index - 2, todoList[index - 2]);
+                        showModal(context,
+                            index: index - 2,
+                            todoList: todoList[index - 2],
+                            updateTodos: updateTodos,
+                            addTodo: addTodo,
+                            updateDateTime: updateDateTime,
+                            controller: _controller,
+                            checkFlag: checkFlag);
                       },
                       child: TodoTile(
                           archiveTodos: archiveTodos,
@@ -259,32 +264,16 @@ class _TodosState extends State<Todos> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: kPrimaryColor,
           onPressed: () {
-            showModal(
-              context,
-              null,
-              null,
-            );
+            showModal(context,
+                controller: _controller,
+                updateDateTime: updateDateTime,
+                checkFlag: checkFlag,
+                addTodo: addTodo);
           },
           child: const Icon(Icons.add),
         ),
       ),
       drawer: drawerChild(Name: User),
     );
-  }
-
-  Future<dynamic> showModal(BuildContext context, index, [todoList]) {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return modalContainer(
-            updateTodo: updateTodos,
-            updateFlag: checkFlag,
-            controller: _controller,
-            todoList: todoList,
-            index: index,
-            updateDateTime: updateDateTime,
-            addTodo: addTodo,
-          );
-        });
   }
 }

@@ -34,7 +34,7 @@ class _drawerChildState extends State<drawerChild> {
   Uint8List? imageString;
 
   addProject() async {
-    Map newProject = {
+    Map<dynamic, dynamic> newProject = {
       'title': _controller.text,
       'todoLabel': false,
       'project': true
@@ -65,7 +65,6 @@ class _drawerChildState extends State<drawerChild> {
     var project = await LinksBox.get('Projects').todos;
     if (project != null) {
       projects = project;
-      print(projects);
     }
   }
 
@@ -186,6 +185,9 @@ class _drawerChildState extends State<drawerChild> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => Archive(
+                                label: '${projects[index]['title']}',
+                                boxKey: 'Todos',
+                                box: 'todoList',
                                 isLinks: true,
                                 appBarTitle: '${projects[index]['title']}')));
                   },

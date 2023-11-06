@@ -119,12 +119,10 @@ class TodoLabel extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),
         color: Colors.purple,
       ),
-      child: Flexible(
-        child: Center(
-          child: Text(
-            'Study',
-            style: TextStyle(color: Colors.white, fontSize: 10),
-          ),
+      child: Center(
+        child: Text(
+          'Study',
+          style: TextStyle(color: Colors.white, fontSize: 10),
         ),
       ),
     );
