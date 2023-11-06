@@ -3,7 +3,7 @@ import 'package:doey/widgets/Global/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:doey/widgets/Input/TextBox.dart';
 
-IconButton popUp(BuildContext context, {controller}) {
+IconButton popUp(BuildContext context, {controller, isLabel, func}) {
   return IconButton(
       onPressed: () {
         showDialog(
@@ -26,22 +26,24 @@ IconButton popUp(BuildContext context, {controller}) {
                       SizedBox(
                         height: 60,
                         width: MediaQuery.of(context).size.width,
-                        child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: randomColors.length,
-                            itemBuilder: (context, index) {
-                              return Checkbox(
-                                value: false,
-                                side:
-                                    const BorderSide(color: Colors.transparent),
-                                fillColor: MaterialStateProperty.all(
-                                    randomColors[index]),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(40),
-                                ),
-                                onChanged: (value) {},
-                              );
-                            }),
+                        child: isLabel
+                            ? ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: randomColors.length,
+                                itemBuilder: (context, index) {
+                                  return Checkbox(
+                                    value: false,
+                                    side: const BorderSide(
+                                        color: Colors.transparent),
+                                    fillColor: MaterialStateProperty.all(
+                                        randomColors[index]),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(40),
+                                    ),
+                                    onChanged: (value) {},
+                                  );
+                                })
+                            : SizedBox(),
                       ),
                       const SizedBox(
                         height: 20,
@@ -57,6 +59,7 @@ IconButton popUp(BuildContext context, {controller}) {
                                     borderRadius: BorderRadius.circular(15.0))),
                           ),
                           onPressed: () {
+                            func();
                             Navigator.pop(context);
                           },
                           child: const Text(

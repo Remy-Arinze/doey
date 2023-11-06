@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:doey/Adapters/Links.dart';
+import 'package:doey/pages/Archives.dart';
 import 'package:doey/utils/constants.dart';
 import 'package:doey/widgets/Global/constants.dart';
 import 'package:doey/widgets/Input/PopUp.dart';
@@ -26,8 +28,21 @@ class _drawerChildState extends State<drawerChild> {
   late Uint8List selectedImage;
   final TextEditingController _controller = new TextEditingController();
   var myBox = Hive.box('User');
+  var LinksBox = Hive.box('Links');
+  var projects = [];
 
   Uint8List? imageString;
+
+  addProject() async {
+    Map newProject = {
+      'title': _controller.text,
+      'todoLabel': false,
+      'project': true
+    };
+    projects.add(newProject);
+    await LinksBox.put('Projects', Links(projects, true));
+    setState(() {});
+  }
 
   updateImage() async {
     var user = await myBox.get('user');
@@ -46,11 +61,20 @@ class _drawerChildState extends State<drawerChild> {
     }
   }
 
+  getProjects() async {
+    var project = await LinksBox.get('Projects').todos;
+    if (project != null) {
+      projects = project;
+      print(projects);
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getImage();
+    getProjects();
   }
 
   @override
@@ -119,6 +143,7 @@ class _drawerChildState extends State<drawerChild> {
         Row(
           children: [
             DrawerTile(
+              isDone: true,
               color: kPrimaryColor,
               title: 'Completed',
               icon: Icon(
@@ -127,6 +152,7 @@ class _drawerChildState extends State<drawerChild> {
               ),
             ),
             DrawerTile(
+              isDone: false,
               color: kPrimaryColor,
               title: 'Archived',
               icon: Icon(
@@ -143,7 +169,8 @@ class _drawerChildState extends State<drawerChild> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text('Projects', style: kTitleStyle),
-            popUp(context, controller: _controller),
+            popUp(context,
+                controller: _controller, isLabel: false, func: addProject),
           ],
         ),
         SizedBox(height: 5),
@@ -151,20 +178,30 @@ class _drawerChildState extends State<drawerChild> {
           height: MediaQuery.of(context).size.height * 0.2,
           width: MediaQuery.of(context).size.width,
           child: ListView.builder(
-              itemCount: projectArray.length,
+              itemCount: projects.length,
               itemBuilder: (context, index) {
-                return Container(
-                  margin: EdgeInsets.only(bottom: 5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Color.fromARGB(255, 255, 255, 255),
-                  ),
-                  child: ListTile(
-                    title: Text(
-                      '${projectArray[index]['name']},',
-                      style: TextStyle(color: Colors.black),
+                return InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Archive(
+                                isLinks: true,
+                                appBarTitle: '${projects[index]['title']}')));
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: 5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Color.fromARGB(255, 255, 255, 255),
                     ),
-                    trailing: Text('${projectArray[index]['tasks']}'),
+                    child: ListTile(
+                      title: Text(
+                        '${projects[index]['title']}',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      trailing: Text('${projects.length}'),
+                    ),
                   ),
                 );
               }),

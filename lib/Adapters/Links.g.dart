@@ -16,9 +16,10 @@ class LinksAdapter extends TypeAdapter<Links> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Links()
-      ..title = fields[0] as String
-      ..color = fields[1] == null ? '0xdD3D3D3' : fields[1] as String;
+    return Links(
+      (fields[0] as List).cast<dynamic>(),
+      fields[1] == null ? false : fields[1] as bool?,
+    );
   }
 
   @override
@@ -26,9 +27,9 @@ class LinksAdapter extends TypeAdapter<Links> {
     writer
       ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.title)
+      ..write(obj.todos)
       ..writeByte(1)
-      ..write(obj.color);
+      ..write(obj.isProject);
   }
 
   @override

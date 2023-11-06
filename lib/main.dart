@@ -9,7 +9,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   await Hive.initFlutter();
-  Hive.registerAdapter(Links() as TypeAdapter);
+  Hive.registerAdapter(LinksAdapter());
   await Hive.openBox('TODOS');
   await Hive.openBox('Archives');
   await Hive.openBox('User');

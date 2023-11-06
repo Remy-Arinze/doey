@@ -1,8 +1,11 @@
+import 'package:doey/widgets/Global/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 class Archive extends StatefulWidget {
-  Archive({super.key});
+  String appBarTitle;
+  bool isLinks;
+  Archive({super.key, required this.appBarTitle, this.isLinks = false});
 
   @override
   State<Archive> createState() => _ArchiveState();
@@ -11,26 +14,16 @@ class Archive extends StatefulWidget {
 class _ArchiveState extends State<Archive> {
   List Archives = [];
 
-  getArchives() async {
-    var archive = await Hive.box('Archives');
-    if (archive != null) {
-      Archives = archive.get('archiveList');
-      setState(() {});
-    }
-    ;
-  }
-
   @override
   void initState() {
     super.initState();
-    getArchives();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Archives'),
+        title: Text(widget.appBarTitle),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
       ),
@@ -60,6 +53,13 @@ class _ArchiveState extends State<Archive> {
               ),
             );
           })),
+      floatingActionButton: widget.isLinks
+          ? FloatingActionButton(
+              backgroundColor: kPrimaryColor,
+              onPressed: () {},
+              child: const Icon(Icons.add),
+            )
+          : Container(),
     );
   }
 }

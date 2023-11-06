@@ -7,11 +7,13 @@ import '../pages/Archives.dart';
 class DrawerTile extends StatefulWidget {
   String title;
   Color? color;
+  bool isDone;
   Widget icon;
   DrawerTile({
     this.color,
     required this.title,
     required this.icon,
+    required this.isDone,
     Key? key,
   }) : super(key: key);
 
@@ -51,7 +53,11 @@ class _DrawerTileState extends State<DrawerTile>
       child: InkWell(
         onTap: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Archive()));
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Archive(
+                        appBarTitle: widget.isDone ? 'Completed' : 'Archive',
+                      )));
         },
         child: Card(
           color: kPrimaryColor,

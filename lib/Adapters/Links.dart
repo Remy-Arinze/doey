@@ -4,7 +4,13 @@ part 'Links.g.dart';
 @HiveType(typeId: 0)
 class Links extends HiveObject {
   @HiveField(0)
-  late String title;
-  @HiveField(1, defaultValue: '0xdD3D3D3')
-  late String color;
+  List todos;
+
+  @HiveField(1, defaultValue: false)
+  bool? isProject;
+
+  Links(
+    this.todos,
+    this.isProject,
+  );
 }
