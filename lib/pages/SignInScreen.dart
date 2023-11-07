@@ -13,15 +13,6 @@ class Details extends StatefulWidget {
   State<Details> createState() => _DetailsState();
 }
 
-final howToUseDoey = [
-  {
-    'title': 'How to use doey',
-    'todoLabel': false,
-    'project': true,
-    'todos': []
-  },
-];
-
 class _DetailsState extends State<Details> {
   final TextEditingController _controller = TextEditingController();
   var linksBox = Hive.box('Links');
@@ -33,6 +24,7 @@ class _DetailsState extends State<Details> {
     if (_controller.text.isNotEmpty) {
       await userBox.put('user', user);
       await linksBox.put('Projects', Links(howToUseDoey, true));
+      await linksBox.put('Labels', Links(labels, false));
       Navigator.pushReplacementNamed(context, '/todos');
     } else {
       errMsg = 'Please enter a name';

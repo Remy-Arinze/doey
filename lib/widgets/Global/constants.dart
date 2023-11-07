@@ -19,15 +19,19 @@ const randomColors = [
   Colors.teal
 ];
 
-final mockArray = [
-  {'name': 'Work', 'color': randomColors[0]},
-  {'name': 'Study', 'color': randomColors[8]},
-  {'name': 'Exercise', 'color': randomColors[2]},
-  {'name': 'Recipe', 'color': randomColors[3]},
-  {'name': 'Personal', 'color': randomColors[5]},
-  {'name': 'Habit', 'color': randomColors[7]}
+final labels = [
+  {'name': 'Work', 'color': '0xFF1a412d'},
+  {'name': 'Study', 'color': '0xFFFF0000'},
+  {'name': 'Exercise', 'color': '0xFFFFD700'},
+  {'name': 'Recipe', 'color': '0xFF00FFFF'},
+  {'name': 'Personal', 'color': '0xFFFF00FF'},
+  {'name': 'Habit', 'color': '0xFF000000'}
 ];
-final projectArray = [
-  {'name': 'Doey App', 'tasks': 5, 'icon': 'tag'},
-  {'name': 'Web Design', 'tasks': 2, 'icon': 'tag'},
+final howToUseDoey = [
+  {
+    'title': 'How to use doey',
+    'todoLabel': false,
+    'project': true,
+    'todos': []
+  },
 ];

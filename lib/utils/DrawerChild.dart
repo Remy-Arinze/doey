@@ -30,6 +30,7 @@ class _drawerChildState extends State<drawerChild> {
   var myBox = Hive.box('User');
   var LinksBox = Hive.box('Links');
   var projects = [];
+  var labelArray = [];
 
   Uint8List? imageString;
 
@@ -64,9 +65,12 @@ class _drawerChildState extends State<drawerChild> {
 
   getProjects() async {
     var project = await LinksBox.get('Projects').todos;
-    if (project != null) {
+    var labels = await LinksBox.get('Labels').todos;
+    if (project != null || labels != null) {
       projects = project;
+      labelArray = labels;
     }
+    print(labelArray);
   }
 
   updateProjects() {}
@@ -236,7 +240,7 @@ class _drawerChildState extends State<drawerChild> {
           height: MediaQuery.of(context).size.height * 0.25,
           child: GridView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: mockArray.length,
+              itemCount: labelArray.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisSpacing: 10,
                   crossAxisCount: 3,
@@ -247,10 +251,11 @@ class _drawerChildState extends State<drawerChild> {
                   child: ListTile(
                     horizontalTitleGap: 0,
                     trailing: CircleAvatar(
-                        backgroundColor: mockArray[index]['color'] as Color,
+                        backgroundColor:
+                            Color(int.parse(labelArray[index]['color'])),
                         radius: 10),
                     tileColor: Colors.white,
-                    title: Text('${mockArray[index]['name']}'),
+                    title: Text('${labelArray[index]['name']}'),
                   ),
                 );
               }),
