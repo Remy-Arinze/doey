@@ -34,10 +34,11 @@ class _drawerChildState extends State<drawerChild> {
   Uint8List? imageString;
 
   addProject() async {
-    Map<dynamic, dynamic> newProject = {
+    Map<String, Object> newProject = {
       'title': _controller.text,
       'todoLabel': false,
-      'project': true
+      'project': true,
+      'todos': []
     };
     projects.add(newProject);
     await LinksBox.put('Projects', Links(projects, true));
@@ -68,6 +69,7 @@ class _drawerChildState extends State<drawerChild> {
     }
   }
 
+  updateProjects() {}
   @override
   void initState() {
     // TODO: implement initState
@@ -191,7 +193,11 @@ class _drawerChildState extends State<drawerChild> {
                                     isLinks: true,
                                     appBarTitle:
                                         '${projects[index]['title']}')))
-                        .then((_) => setState(() {}));
+                        .then((todos) => {
+                              projects[index]['todos'] = todos,
+                              LinksBox.put('Projects', Links(projects, true)),
+                              setState(() {})
+                            });
                   },
                   child: Container(
                     margin: EdgeInsets.only(bottom: 5),
@@ -204,7 +210,7 @@ class _drawerChildState extends State<drawerChild> {
                         '${projects[index]['title']}',
                         style: TextStyle(color: Colors.black),
                       ),
-                      trailing: Text('${projects.length}'),
+                      trailing: Text('${projects[index]['todos'].length}'),
                     ),
                   ),
                 );
@@ -220,7 +226,7 @@ class _drawerChildState extends State<drawerChild> {
               'Labels',
               style: kTitleStyle,
             ),
-            popUp(context, controller: _controller),
+            popUp(context, controller: _controller, func: () => addProject()),
           ],
         ),
         SizedBox(
@@ -233,9 +239,9 @@ class _drawerChildState extends State<drawerChild> {
               itemCount: mockArray.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisSpacing: 10,
-                  crossAxisCount: 2,
+                  crossAxisCount: 3,
                   mainAxisSpacing: 20,
-                  childAspectRatio: 0.8),
+                  childAspectRatio: 0.5),
               itemBuilder: (context, index) {
                 return Center(
                   child: ListTile(

@@ -14,7 +14,12 @@ class Details extends StatefulWidget {
 }
 
 final howToUseDoey = [
-  {'title': 'How to use doey', 'todoLabel': false, 'project': true},
+  {
+    'title': 'How to use doey',
+    'todoLabel': false,
+    'project': true,
+    'todos': []
+  },
 ];
 
 class _DetailsState extends State<Details> {

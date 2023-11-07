@@ -6,6 +6,7 @@ import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:doey/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:moment_dart/moment_dart.dart';
 import '../utils/DrawerChild.dart';
 import '../utils/bottomModal.dart';
@@ -184,8 +185,8 @@ class _TodosState extends State<Todos> {
                 _handleMenuButtonPressed();
               },
               icon: Icon(
-                Icons.menu,
-                color: Colors.black,
+                EvaIcons.grid_outline,
+                color: kPrimaryColor,
               )),
         ),
         body: Container(

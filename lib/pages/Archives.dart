@@ -82,7 +82,6 @@ class _ArchiveState extends State<Archive> {
     if (t != null) {
       todos = t;
       setState(() {});
-      print(todos);
     }
   }
 
@@ -92,7 +91,6 @@ class _ArchiveState extends State<Archive> {
 
     todoBox = Hive.box(widget.boxKey);
     getTodos();
-    print(widget.label);
   }
 
   @override
@@ -101,7 +99,7 @@ class _ArchiveState extends State<Archive> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pop(context, todos);
           },
           icon: Icon(Icons.arrow_back_ios_new_rounded),
         ),
@@ -117,7 +115,9 @@ class _ArchiveState extends State<Archive> {
                 itemBuilder: ((context, index) {
                   return todos[index]['label'] == widget.label
                       ? TodoTile(
-                          isDone: todos[index]['done'], todos: todos[index])
+                          isOverdue: reshuffleOverDueTodos,
+                          isDone: todos[index]['done'],
+                          todos: todos[index])
                       : Container();
                 }))
             : ListView.builder(

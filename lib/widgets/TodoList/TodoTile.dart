@@ -5,6 +5,7 @@ import 'package:doey/widgets/Global/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hive/hive.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:moment_dart/moment_dart.dart';
 
 class TodoTile extends StatelessWidget {
@@ -101,7 +102,7 @@ class TodoTile extends StatelessWidget {
                   ? Row(
                       children: [
                         Icon(
-                          Icons.folder_open,
+                          EvaIcons.folder_outline,
                           size: 14,
                           color: Colors.grey,
                         ),
