@@ -99,6 +99,12 @@ class _ArchiveState extends State<Archive> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_back_ios_new_rounded),
+        ),
         title: Text(widget.appBarTitle),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,

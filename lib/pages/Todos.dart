@@ -253,6 +253,7 @@ class _TodosState extends State<Todos> {
                           archiveTodos: archiveTodos,
                           index: index - 2,
                           tag: todoList[index - 2]['tag'],
+                          label: todoList[index - 2]['label'],
                           changeValue: doTodo,
                           isOverdue: reshuffleOverDueTodos,
                           isDone: todoList[index - 2]['done'],

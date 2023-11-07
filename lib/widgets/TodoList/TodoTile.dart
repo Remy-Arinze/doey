@@ -12,6 +12,7 @@ class TodoTile extends StatelessWidget {
   var archiveTodos;
   var isOverdue;
   var index;
+  String label;
   var tag;
   var changeValue;
   var deleteTodos;
@@ -20,6 +21,7 @@ class TodoTile extends StatelessWidget {
     this.tag,
     this.isOverdue = false,
     required this.isDone,
+    this.label = '',
     this.deleteTodos,
     this.changeValue,
     this.archiveTodos,
@@ -88,11 +90,31 @@ class TodoTile extends StatelessWidget {
                   color: Colors.black,
                   decoration: isDone ? TextDecoration.lineThrough : null),
             ),
-            subtitle: Row(children: [
-              formatDate(todos: todos),
-              SizedBox(width: 5),
-              isTodoOverdue(index,
-                  todos: todos, index: index, isOverdue: isOverdue)
+            subtitle: Column(children: [
+              Row(children: [
+                formatDate(todos: todos),
+                SizedBox(width: 60),
+                isTodoOverdue(index,
+                    todos: todos, index: index, isOverdue: isOverdue)
+              ]),
+              label != ''
+                  ? Row(
+                      children: [
+                        Icon(
+                          Icons.folder_open,
+                          size: 14,
+                          color: Colors.grey,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          label,
+                          style: TextStyle(color: kAccentBtn, fontSize: 10),
+                        )
+                      ],
+                    )
+                  : Container()
             ]),
             trailing: Column(
               crossAxisAlignment: CrossAxisAlignment.end,

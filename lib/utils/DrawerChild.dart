@@ -182,14 +182,16 @@ class _drawerChildState extends State<drawerChild> {
                 return InkWell(
                   onTap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Archive(
-                                label: '${projects[index]['title']}',
-                                boxKey: 'Todos',
-                                box: 'todoList',
-                                isLinks: true,
-                                appBarTitle: '${projects[index]['title']}')));
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Archive(
+                                    label: '${projects[index]['title']}',
+                                    boxKey: 'Todos',
+                                    box: 'todoList',
+                                    isLinks: true,
+                                    appBarTitle:
+                                        '${projects[index]['title']}')))
+                        .then((_) => setState(() {}));
                   },
                   child: Container(
                     margin: EdgeInsets.only(bottom: 5),

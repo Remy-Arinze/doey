@@ -25,7 +25,8 @@ Widget isTodoOverdue(i, {isOverdue, todos, index}) {
     isOverdue(index);
     return const Text(
       'Overdue',
-      style: TextStyle(fontSize: 10, color: Colors.red),
+      style: TextStyle(
+          fontSize: 13, color: Colors.red, fontWeight: FontWeight.w500),
     );
   }
 
