@@ -20,7 +20,10 @@ const randomColors = [
 ];
 
 final labels = [
-  {'name': 'Work', 'color': '0xFF1a412d'},
+  {
+    'name': 'Work',
+    'color': '0xFF1a412d',
+  },
   {'name': 'Study', 'color': '0xFFFF0000'},
   {'name': 'Exercise', 'color': '0xFFFFD700'},
   {'name': 'Recipe', 'color': '0xFF00FFFF'},

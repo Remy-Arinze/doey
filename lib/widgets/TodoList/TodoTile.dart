@@ -13,6 +13,7 @@ class TodoTile extends StatelessWidget {
   var archiveTodos;
   var isOverdue;
   var index;
+  var tagColor;
   String label;
   var tag;
   var changeValue;
@@ -20,6 +21,7 @@ class TodoTile extends StatelessWidget {
   TodoTile({
     this.index,
     this.tag,
+    this.tagColor,
     this.isOverdue = false,
     required this.isDone,
     this.label = '',
@@ -120,7 +122,12 @@ class TodoTile extends StatelessWidget {
             trailing: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [TodoLabel(), checktag(tag)],
+              children: [
+                TodoLabel(
+                  label: label,
+                ),
+                checktag(tag)
+              ],
             ),
           ),
         ));
@@ -128,26 +135,40 @@ class TodoTile extends StatelessWidget {
 }
 
 class TodoLabel extends StatelessWidget {
-  const TodoLabel({
-    super.key,
-  });
+  String label;
+  String color;
+  TodoLabel({super.key, this.label = '', this.color = ''});
+
+  checkLabel() {
+    if (label != 'Study' &&
+        label != 'Work' &&
+        label != 'Habit' &&
+        label != 'Personal' &&
+        label != 'Exercise' &&
+        label != 'Recipe') {
+      return SizedBox();
+    } else {
+      print(color);
+      return Container(
+        constraints: BoxConstraints(maxHeight: 30, maxWidth: 40),
+        height: 20,
+        padding: EdgeInsets.symmetric(horizontal: 5),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          color: Colors.purple,
+        ),
+        child: Center(
+          child: Text(
+            label,
+            style: TextStyle(color: Colors.white, fontSize: 10),
+          ),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints(maxHeight: 30, maxWidth: 40),
-      height: 20,
-      padding: EdgeInsets.symmetric(horizontal: 5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        color: Colors.purple,
-      ),
-      child: Center(
-        child: Text(
-          'Study',
-          style: TextStyle(color: Colors.white, fontSize: 10),
-        ),
-      ),
-    );
+    return checkLabel();
   }
 }

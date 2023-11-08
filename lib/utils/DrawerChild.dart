@@ -2,6 +2,7 @@
 
 import 'package:doey/Adapters/Links.dart';
 import 'package:doey/pages/Archives.dart';
+import 'package:doey/pages/LabelPage.dart';
 import 'package:doey/utils/constants.dart';
 import 'package:doey/widgets/Global/constants.dart';
 import 'package:doey/widgets/Input/PopUp.dart';
@@ -43,6 +44,7 @@ class _drawerChildState extends State<drawerChild> {
     };
     projects.add(newProject);
     await LinksBox.put('Projects', Links(projects, true));
+    _controller.text = '';
     setState(() {});
   }
 
@@ -70,7 +72,6 @@ class _drawerChildState extends State<drawerChild> {
       projects = project;
       labelArray = labels;
     }
-    print(labelArray);
   }
 
   updateProjects() {}
@@ -97,7 +98,8 @@ class _drawerChildState extends State<drawerChild> {
                 if (image != null) {
                   var binImage = await image.readAsBytes();
                   selectedImage = binImage;
-                  updateImage();
+                  print(binImage);
+                  // updateImage();
                 }
               },
               child: imageString == null
@@ -199,6 +201,7 @@ class _drawerChildState extends State<drawerChild> {
                                         '${projects[index]['title']}')))
                         .then((todos) => {
                               projects[index]['todos'] = todos,
+                              // print(projects[index]['todos']),
                               LinksBox.put('Projects', Links(projects, true)),
                               setState(() {})
                             });
@@ -230,7 +233,6 @@ class _drawerChildState extends State<drawerChild> {
               'Labels',
               style: kTitleStyle,
             ),
-            popUp(context, controller: _controller, func: () => addProject()),
           ],
         ),
         SizedBox(
@@ -248,14 +250,28 @@ class _drawerChildState extends State<drawerChild> {
                   childAspectRatio: 0.5),
               itemBuilder: (context, index) {
                 return Center(
-                  child: ListTile(
-                    horizontalTitleGap: 0,
-                    trailing: CircleAvatar(
-                        backgroundColor:
-                            Color(int.parse(labelArray[index]['color'])),
-                        radius: 10),
-                    tileColor: Colors.white,
-                    title: Text('${labelArray[index]['name']}'),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Archive(
+                                  tagColor: labelArray[index]['color'],
+                                  appBarTitle: '${labelArray[index]['name']}',
+                                  boxKey: 'Todos',
+                                  box: 'todoList',
+                                  isLinks: true,
+                                  label: '${labelArray[index]['name']}')));
+                    },
+                    child: ListTile(
+                      horizontalTitleGap: 0,
+                      trailing: CircleAvatar(
+                          backgroundColor:
+                              Color(int.parse(labelArray[index]['color'])),
+                          radius: 10),
+                      tileColor: Colors.white,
+                      title: Text('${labelArray[index]['name']}'),
+                    ),
                   ),
                 );
               }),

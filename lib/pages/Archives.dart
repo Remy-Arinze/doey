@@ -10,6 +10,7 @@ class Archive extends StatefulWidget {
   String appBarTitle;
   bool isLinks;
   String label;
+  var tagColor;
   var boxKey;
   var box;
   Archive(
@@ -17,6 +18,7 @@ class Archive extends StatefulWidget {
       required this.appBarTitle,
       this.isLinks = false,
       this.label = '',
+      this.tagColor,
       this.box,
       this.boxKey});
 
@@ -26,6 +28,7 @@ class Archive extends StatefulWidget {
 
 class _ArchiveState extends State<Archive> {
   List todos = [];
+  List returnedList = [];
   String tag = '';
   String date = Moment(DateTime.now().date).toIso8601String();
   var time = '';
@@ -85,6 +88,17 @@ class _ArchiveState extends State<Archive> {
     }
   }
 
+  List shuffleReturnedList() {
+    for (var i = 0; i < todos.length; i++) {
+      if (todos[i]['label'] == widget.appBarTitle) {
+        returnedList.add(todos[i]);
+        print(returnedList);
+      }
+    }
+
+    return returnedList;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -99,7 +113,7 @@ class _ArchiveState extends State<Archive> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context, todos);
+            Navigator.pop(context, shuffleReturnedList());
           },
           icon: Icon(Icons.arrow_back_ios_new_rounded),
         ),
@@ -117,6 +131,8 @@ class _ArchiveState extends State<Archive> {
                       ? TodoTile(
                           isOverdue: reshuffleOverDueTodos,
                           isDone: todos[index]['done'],
+                          label: todos[index]['label'],
+                          tagColor: widget.tagColor,
                           todos: todos[index])
                       : Container();
                 }))
