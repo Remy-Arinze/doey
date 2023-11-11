@@ -8,8 +8,8 @@ import 'package:hive/hive.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:moment_dart/moment_dart.dart';
 
-class TodoTile extends StatelessWidget {
-  final isDone;
+class TodoTile extends StatefulWidget {
+  var isDone;
   var archiveTodos;
   var isOverdue;
   var index;
@@ -35,8 +35,39 @@ class TodoTile extends StatelessWidget {
   final todos;
 
   @override
+  State<TodoTile> createState() => _TodoTileState();
+}
+
+class _TodoTileState extends State<TodoTile> {
+  checkBox() {
+    if (widget.isDone) {
+      return IconButton(
+          onPressed: () {
+            widget.isDone = false;
+            setState(() {});
+          },
+          icon: Icon(
+            EvaIcons.settings,
+            color: Colors.green,
+            size: 20,
+          ));
+    } else {
+      return Checkbox(
+        value: widget.isDone,
+        side: BorderSide(color: kPrimaryColor),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(30)),
+        ),
+        onChanged: (value) {
+          widget.changeValue(widget.todos, value);
+        },
+      );
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    print({'todos': todos});
+    print({'todos': widget.todos});
     return Slidable(
         startActionPane:
             ActionPane(extentRatio: 0.2, motion: DrawerMotion(), children: [
@@ -46,7 +77,7 @@ class TodoTile extends StatelessWidget {
               bottomLeft: Radius.circular(10),
             ),
             onPressed: (context) {
-              archiveTodos(todos, index);
+              widget.archiveTodos(widget.todos, widget.index);
             },
             icon: Icons.archive_outlined,
             backgroundColor: Colors.green,
@@ -61,7 +92,7 @@ class TodoTile extends StatelessWidget {
               bottomRight: Radius.circular(10),
             ),
             onPressed: (context) {
-              deleteTodos(index);
+              widget.deleteTodos(widget.index);
             },
             backgroundColor: Color(0xFFFE4A49),
             foregroundColor: Colors.white,
@@ -75,33 +106,27 @@ class TodoTile extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
           ),
           child: ListTile(
-            leading: Checkbox(
-              value: isDone,
-              side: BorderSide(color: kPrimaryColor),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(30)),
-              ),
-              onChanged: (value) {
-                changeValue(todos, value);
-              },
-            ),
+            leading: checkBox(),
             title: Text(
-              todos['title'],
+              widget.todos['title'],
               overflow: TextOverflow.clip,
               style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
                   color: Colors.black,
-                  decoration: isDone ? TextDecoration.lineThrough : null),
+                  decoration:
+                      widget.isDone ? TextDecoration.lineThrough : null),
             ),
             subtitle: Column(children: [
               Row(children: [
-                formatDate(todos: todos),
+                formatDate(todos: widget.todos),
                 SizedBox(width: 60),
-                isTodoOverdue(index,
-                    todos: todos, index: index, isOverdue: isOverdue)
+                isTodoOverdue(widget.index,
+                    todos: widget.todos,
+                    index: widget.index,
+                    isOverdue: widget.isOverdue)
               ]),
-              label != ''
+              widget.label != ''
                   ? Row(
                       children: [
                         Icon(
@@ -113,7 +138,7 @@ class TodoTile extends StatelessWidget {
                           width: 10,
                         ),
                         Text(
-                          label,
+                          widget.label,
                           style: TextStyle(color: kAccentBtn, fontSize: 10),
                         )
                       ],
@@ -125,9 +150,9 @@ class TodoTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 TodoLabel(
-                  label: label,
+                  label: widget.label,
                 ),
-                checktag(tag)
+                checktag(widget.tag)
               ],
             ),
           ),

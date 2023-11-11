@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen>
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => Details()));
     } else {
-      Navigator.pushReplacementNamed(context, '/todos');
+      Navigator.pushReplacementNamed(context, '/nav');
     }
   }
 
