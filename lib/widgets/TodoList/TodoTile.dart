@@ -36,6 +36,7 @@ class TodoTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print({'todos': todos});
     return Slidable(
         startActionPane:
             ActionPane(extentRatio: 0.2, motion: DrawerMotion(), children: [
@@ -139,6 +140,22 @@ class TodoLabel extends StatelessWidget {
   String color;
   TodoLabel({super.key, this.label = '', this.color = ''});
 
+  changeColor() {
+    if (label == 'Study') {
+      return Color(0xFFFF0000);
+    } else if (label == 'Personal') {
+      return Color(0xFFFF00FF);
+    } else if (label == 'Work') {
+      return Color(0xFF1a412d);
+    } else if (label == 'Habit') {
+      return Color(0xFF000000);
+    } else if (label == 'Recipe') {
+      return Color(0xFF00FFFF);
+    } else if (label == 'Exercise') {
+      return Color(0xFFFFD700);
+    } else if (label == 'Study') {}
+  }
+
   checkLabel() {
     if (label != 'Study' &&
         label != 'Work' &&
@@ -148,19 +165,21 @@ class TodoLabel extends StatelessWidget {
         label != 'Recipe') {
       return SizedBox();
     } else {
-      print(color);
       return Container(
-        constraints: BoxConstraints(maxHeight: 30, maxWidth: 40),
+        constraints: BoxConstraints(
+            maxWidth: label != 'Personal' && label != 'Exercise' ? 40 : 55),
         height: 20,
         padding: EdgeInsets.symmetric(horizontal: 5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          color: Colors.purple,
+          color: changeColor(),
         ),
         child: Center(
-          child: Text(
-            label,
-            style: TextStyle(color: Colors.white, fontSize: 10),
+          child: Flexible(
+            child: Text(
+              label,
+              style: TextStyle(color: Colors.white, fontSize: 10),
+            ),
           ),
         ),
       );

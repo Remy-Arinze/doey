@@ -92,7 +92,6 @@ class _ArchiveState extends State<Archive> {
     for (var i = 0; i < todos.length; i++) {
       if (todos[i]['label'] == widget.appBarTitle) {
         returnedList.add(todos[i]);
-        print(returnedList);
       }
     }
 
@@ -141,7 +140,9 @@ class _ArchiveState extends State<Archive> {
                 itemBuilder: ((context, index) {
                   print('object');
                   return TodoTile(
-                      isDone: todos[index]['done'], todos: todos[index]);
+                      tagColor: widget.tagColor,
+                      isDone: todos[index]['done'],
+                      todos: todos[index]);
                 })),
       ),
       floatingActionButton: widget.isLinks
