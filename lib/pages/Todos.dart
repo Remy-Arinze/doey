@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:doey/utils/Checktime.dart';
 import 'package:doey/utils/createTodoModal.dart';
+import 'package:doey/widgets/DOTW/dotw.dart';
 import 'package:doey/widgets/Global/constants.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:doey/utils/constants.dart';
@@ -229,34 +230,28 @@ class _TodosState extends State<Todos> {
                   itemCount: todoList.length + 2,
                   itemBuilder: ((context, index) {
                     if (index == 0) {
+                      return Padding(
+                          padding: const EdgeInsets.only(bottom: 30.0, top: 5),
+                          child: DOTW());
+                    }
+                    if (index == 1) {
                       return Container(
-                        padding: EdgeInsets.only(left: 5, top: 20),
+                        padding: EdgeInsets.only(left: 5, top: 5),
                         alignment: Alignment.centerLeft,
-                        height: 80,
+                        height: 50,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'Today ${DateTime.now().toString().substring(0, 10)}',
-                              style: TextStyle(fontSize: 12),
+                              style: TextStyle(
+                                  fontSize: 12, color: Colors.blueGrey),
                             ),
                             SizedBox(
                               height: 5,
                             ),
                             timeOfDay(User),
                           ],
-                        ),
-                      );
-                    }
-                    if (index == 1) {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 10.0, top: 20),
-                        child: Text(
-                          'Today',
-                          style: TextStyle(
-                              color: kAccentColor,
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold),
                         ),
                       );
                     }

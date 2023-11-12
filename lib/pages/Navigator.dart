@@ -1,5 +1,6 @@
 import 'package:doey/pages/Progress.dart';
 import 'package:doey/pages/Todos.dart';
+import 'package:doey/widgets/Global/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 
@@ -25,7 +26,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
         type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(
-              icon: Icon(EvaIcons.home_outline), label: 'Todos'),
+              icon: Icon(HeroIcons.check_badge), label: 'Todos'),
           BottomNavigationBarItem(
               icon: Icon(EvaIcons.pie_chart_outline), label: 'Charts')
         ],
@@ -34,7 +35,8 @@ class _BottomNavigatorState extends State<BottomNavigator> {
             current = value;
           });
         },
-        showSelectedLabels: false,
+        selectedItemColor: Colors.green[400],
+        showSelectedLabels: true,
         showUnselectedLabels: false,
         currentIndex: current,
       ),

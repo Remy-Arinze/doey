@@ -27,7 +27,7 @@ class _DetailsState extends State<Details> {
       await linksBox.put('Projects', Links(howToUseDoey, true));
       await linksBox.put('Labels', Links(labels, false));
       await linksBox.put('DoneTodos', Links(done, false));
-      Navigator.pushReplacementNamed(context, '/todos');
+      Navigator.pushReplacementNamed(context, '/nav');
     } else {
       errMsg = 'Please enter a name';
     }

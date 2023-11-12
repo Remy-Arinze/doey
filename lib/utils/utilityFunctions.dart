@@ -1,3 +1,6 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:doey/widgets/Global/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:moment_dart/moment_dart.dart';
 
@@ -46,5 +49,44 @@ Widget checktag(tag) {
     );
   } else {
     return const SizedBox();
+  }
+}
+
+checkDay(day, color) {
+  if (day == 1) {
+    return Text(
+      'mon',
+      style: TextStyle(fontWeight: FontWeight.w400, color: color, fontSize: 10),
+    );
+  } else if (day == 2) {
+    return Text(
+      'tue',
+      style: TextStyle(fontWeight: FontWeight.w400, color: color, fontSize: 10),
+    );
+  } else if (day == 3) {
+    return Text(
+      'wed',
+      style: TextStyle(fontWeight: FontWeight.w400, color: color, fontSize: 10),
+    );
+  } else if (day == 4) {
+    return Text(
+      'thu',
+      style: TextStyle(fontWeight: FontWeight.w400, color: color, fontSize: 10),
+    );
+  } else if (day == 5) {
+    return Text(
+      'fri',
+      style: TextStyle(fontWeight: FontWeight.w400, color: color, fontSize: 10),
+    );
+  } else if (day == 6) {
+    return Text(
+      'sat',
+      style: TextStyle(fontWeight: FontWeight.w400, color: color, fontSize: 10),
+    );
+  } else if (day == 7) {
+    return Text(
+      'sun',
+      style: TextStyle(fontWeight: FontWeight.w400, color: color, fontSize: 10),
+    );
   }
 }
