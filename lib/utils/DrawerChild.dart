@@ -87,7 +87,7 @@ class _drawerChildState extends State<drawerChild> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Padding(
-      padding: const EdgeInsets.only(top: 50.0, left: 15, right: 10),
+      padding: const EdgeInsets.only(top: 40.0, left: 15, right: 10),
       child: Column(children: [
         Row(
           children: [

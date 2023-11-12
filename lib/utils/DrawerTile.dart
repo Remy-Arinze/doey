@@ -56,8 +56,8 @@ class _DrawerTileState extends State<DrawerTile>
               context,
               MaterialPageRoute(
                   builder: (context) => Archive(
-                        boxKey: 'Archives',
-                        box: 'archiveList',
+                        boxKey: widget.isDone ? 'Links' : 'Archives',
+                        box: widget.isDone ? 'DoneTodos' : 'archiveList',
                         label: widget.isDone ? 'Completed' : 'Archived',
                         appBarTitle: widget.isDone ? 'Completed' : 'Archived',
                       )));

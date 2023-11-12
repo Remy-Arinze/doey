@@ -18,6 +18,7 @@ class _DetailsState extends State<Details> {
   var linksBox = Hive.box('Links');
 
   String errMsg = '';
+  final done = [];
   registerName() async {
     Map user = {'name': _controller.text, 'image': ''};
     var userBox = await Hive.box('User');
@@ -25,6 +26,7 @@ class _DetailsState extends State<Details> {
       await userBox.put('user', user);
       await linksBox.put('Projects', Links(howToUseDoey, true));
       await linksBox.put('Labels', Links(labels, false));
+      await linksBox.put('DoneTodos', Links(done, false));
       Navigator.pushReplacementNamed(context, '/todos');
     } else {
       errMsg = 'Please enter a name';

@@ -30,12 +30,44 @@ class _ArchiveState extends State<Archive> {
   List todos = [];
   List returnedList = [];
   String tag = '';
+  final myBox = Hive.box('Todos');
+  var archiveBox = Hive.box('Archives');
+  var userBox = Hive.box('User');
   String date = Moment(DateTime.now().date).toIso8601String();
   var time = '';
 
   final _controller = TextEditingController();
 
   var todoBox;
+  archiveTodos(todoIndex, [index]) async {
+    if (todoIndex['done']) {
+      List archives = [];
+      archives.add(todoIndex);
+      await archiveBox.put('archiveList', archives);
+      List upDatedBox = await myBox.get('todoList');
+      upDatedBox.removeAt(index);
+      await myBox.put('todoList', upDatedBox);
+
+      setState(() {});
+    } else {
+      print('Task is not done');
+
+      SnackBar snackar = SnackBar(
+          margin: EdgeInsets.only(right: 20, left: 20),
+          behavior: SnackBarBehavior.floating,
+          dismissDirection: DismissDirection.startToEnd,
+          duration: Duration(milliseconds: 1500),
+          elevation: 1,
+          content: Container(
+            child: Text(
+              'Task is not done',
+              style: TextStyle(color: Colors.white),
+            ),
+          ));
+
+      ScaffoldMessenger.of(context).showSnackBar(snackar);
+    }
+  }
 
   checkFlag(flag) {
     tag = flag;
@@ -80,11 +112,18 @@ class _ArchiveState extends State<Archive> {
   }
 
   getTodos() async {
-    var t = await todoBox.get(widget.box);
-
-    if (t != null) {
-      todos = t;
-      setState(() {});
+    if (widget.appBarTitle == 'Completed') {
+      var t = await todoBox.get(widget.box).todos;
+      if (t != null) {
+        todos = t;
+        setState(() {});
+      }
+    } else {
+      var t = await todoBox.get(widget.box);
+      if (t != null) {
+        todos = t;
+        setState(() {});
+      }
     }
   }
 
@@ -130,6 +169,7 @@ class _ArchiveState extends State<Archive> {
                       ? TodoTile(
                           isOverdue: reshuffleOverDueTodos,
                           isDone: todos[index]['done'],
+                          archiveTodos: archiveTodos,
                           label: todos[index]['label'],
                           tagColor: widget.tagColor,
                           todos: todos[index])
@@ -140,7 +180,9 @@ class _ArchiveState extends State<Archive> {
                 itemBuilder: ((context, index) {
                   print('object');
                   return TodoTile(
+                      isOverdue: reshuffleOverDueTodos,
                       tagColor: widget.tagColor,
+                      archiveTodos: archiveTodos,
                       isDone: todos[index]['done'],
                       todos: todos[index]);
                 })),

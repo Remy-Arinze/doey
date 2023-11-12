@@ -1,4 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
+import 'dart:async';
+
 import 'package:doey/utils/Checktime.dart';
 import 'package:doey/utils/createTodoModal.dart';
 import 'package:doey/widgets/Global/constants.dart';
@@ -45,7 +47,26 @@ class _TodosState extends State<Todos> {
 
   doTodo(todoIndex, value) {
     todoIndex['done'] = value;
-    setState(() {});
+
+    setState(() {
+      if (value) {
+        Timer(
+            Duration(
+              seconds: 5,
+            ), () async {
+          for (int i = 0; i < todoIndex.length; i++) {
+            if (todoList[i] == todoIndex) {
+              todoList.remove(todoList[i]);
+              await myBox.put('todoList', todoList);
+              setState(() {});
+              return;
+            }
+          }
+        });
+      }
+      print(value);
+      return;
+    });
   }
 
   addTodo() async {
@@ -68,6 +89,7 @@ class _TodosState extends State<Todos> {
         reshuffleOverDueTodos(i);
       }
     }
+
     setState(() {});
   }
 
@@ -142,7 +164,6 @@ class _TodosState extends State<Todos> {
 
   getDetails() async {
     var name = await userBox.get('user');
-    print(name);
     User = name['name'];
     setState(() {});
   }
@@ -229,7 +250,7 @@ class _TodosState extends State<Todos> {
                     }
                     if (index == 1) {
                       return Padding(
-                        padding: const EdgeInsets.only(bottom: 10.0, top: 40),
+                        padding: const EdgeInsets.only(bottom: 10.0, top: 20),
                         child: Text(
                           'Today',
                           style: TextStyle(

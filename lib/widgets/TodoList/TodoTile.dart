@@ -1,5 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:io';
+
+import 'package:doey/Adapters/Links.dart';
 import 'package:doey/utils/utilityFunctions.dart';
 import 'package:doey/widgets/Global/constants.dart';
 import 'package:flutter/material.dart';
@@ -38,18 +41,24 @@ class TodoTile extends StatefulWidget {
   State<TodoTile> createState() => _TodoTileState();
 }
 
+var doneBox = Hive.box('Links');
+List doneTodos = [];
+
 class _TodoTileState extends State<TodoTile> {
   checkBox() {
     if (widget.isDone) {
       return IconButton(
-          onPressed: () {
-            widget.isDone = false;
+          onPressed: () async {
+            widget.changeValue(widget.todos, false);
+
+            doneTodos.remove(widget.todos);
+            await doneBox.put('DoneTodos', Links(doneTodos, false));
+
             setState(() {});
           },
           icon: Icon(
-            EvaIcons.settings,
+            HeroIcons.check_badge,
             color: Colors.green,
-            size: 20,
           ));
     } else {
       return Checkbox(
@@ -60,6 +69,8 @@ class _TodoTileState extends State<TodoTile> {
         ),
         onChanged: (value) {
           widget.changeValue(widget.todos, value);
+          doneTodos.add(widget.todos);
+          doneBox.put('DoneTodos', Links(doneTodos, false));
         },
       );
     }
@@ -192,7 +203,10 @@ class TodoLabel extends StatelessWidget {
     } else {
       return Container(
         constraints: BoxConstraints(
-            maxWidth: label != 'Personal' && label != 'Exercise' ? 40 : 55),
+            maxWidth:
+                label != 'Personal' && label != 'Exercise' && label != 'Recipe'
+                    ? 40
+                    : 55),
         height: 20,
         padding: EdgeInsets.symmetric(horizontal: 5),
         decoration: BoxDecoration(
@@ -203,7 +217,11 @@ class TodoLabel extends StatelessWidget {
           child: Flexible(
             child: Text(
               label,
-              style: TextStyle(color: Colors.white, fontSize: 10),
+              style: TextStyle(
+                  color: label == 'Recipe'
+                      ? Color.fromARGB(255, 96, 96, 96)
+                      : Colors.white,
+                  fontSize: 10),
             ),
           ),
         ),
