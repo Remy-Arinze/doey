@@ -52,6 +52,18 @@ Widget checktag(tag) {
   }
 }
 
+List getDays() {
+  final dates = [];
+  // ignore: unused_local_variable
+  for (var i = 0; i < 7; i++) {
+    final date = DateTime.now().add(Duration(days: i));
+    Map weekDay = {'day': date.weekday, 'date': date.day};
+    dates.add(weekDay);
+  }
+
+  return dates;
+}
+
 checkDay(day, color) {
   if (day == 1) {
     return Text(

@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 class DOTW extends StatefulWidget {
-  const DOTW({super.key});
+  List dates;
+  var func;
+  DOTW({super.key, required this.dates, this.func});
 
   @override
   State<DOTW> createState() => _DOTWState();
@@ -15,21 +17,13 @@ class DOTW extends StatefulWidget {
 class _DOTWState extends State<DOTW> {
   List dates = [];
 
-  getDays() {
-    // ignore: unused_local_variable
-    for (var i = 0; i < 7; i++) {
-      final date = DateTime.now().add(Duration(days: i));
-      Map weekDay = {'day': date.weekday, 'date': date.day};
-      dates.add(weekDay);
-    }
-  }
-
-  List<Widget> renderDates() {
+  List<Widget> renderDates(func) {
     List<Widget> dayDates = [];
     for (var i = 0; i < dates.length; i++) {
       final widget = DateTimeLine(
         date: dates[i]['date'].toString(),
         day: dates[i]['day'],
+        func: func,
       );
 
       dayDates.add(widget);
@@ -41,53 +35,76 @@ class _DOTWState extends State<DOTW> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getDays();
+    dates = widget.dates;
   }
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: renderDates(),
+      children: renderDates(widget.func),
     );
   }
 }
 
-class DateTimeLine extends StatelessWidget {
+class DateTimeLine extends StatefulWidget {
   int day;
+  var func;
   String date;
-  DateTimeLine({super.key, required this.day, required this.date});
+  DateTimeLine({
+    super.key,
+    required this.day,
+    required this.date,
+    this.func,
+  });
 
-  var currentDate = DateTime.now().weekday;
+  @override
+  State<DateTimeLine> createState() => _DateTimeLineState();
+}
+
+class _DateTimeLineState extends State<DateTimeLine> {
+  var currentDate = DateTime.now().day.toString();
 
   @override
   Widget build(BuildContext context) {
-    print({day: currentDate});
-    return Container(
-      height: currentDate == day ? 42 : 40,
-      width: currentDate == day ? 35 : 33,
-      margin: EdgeInsets.symmetric(horizontal: 11),
-      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-      decoration: BoxDecoration(
-          color: currentDate == day ? Colors.blueGrey : kAccentBtn,
-          borderRadius: BorderRadius.circular(10)),
-      child:
-          Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        checkDay(day, currentDate == day ? Colors.white : Colors.black),
-        currentDate == day
-            ? Icon(
-                HeroIcons.check_badge,
-                size: 18,
-                color: Colors.white,
-              )
-            : Text(
-                date,
-                style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    color: currentDate == day ? Colors.white : kPrimaryColor,
-                    fontSize: 10),
-              ),
-      ]),
+    // Todo: Make days static
+    return InkWell(
+      onTap: () {
+        setState(() {
+          currentDate = widget.date;
+        });
+        widget.func(widget.date);
+      },
+      child: Container(
+        height: currentDate == widget.date ? 42 : 40,
+        width: currentDate == widget.date ? 35 : 33,
+        margin: EdgeInsets.symmetric(horizontal: 11),
+        padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+        decoration: BoxDecoration(
+            color: currentDate == widget.date ? Colors.blueGrey : kAccentBtn,
+            borderRadius: BorderRadius.circular(10)),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              checkDay(widget.day,
+                  currentDate == widget.date ? Colors.white : Colors.black),
+              currentDate == widget.date
+                  ? Icon(
+                      HeroIcons.check_badge,
+                      size: 18,
+                      color: Colors.white,
+                    )
+                  : Text(
+                      widget.date,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          color: currentDate == widget.date
+                              ? Colors.white
+                              : kPrimaryColor,
+                          fontSize: 10),
+                    ),
+            ]),
+      ),
     );
   }
 }

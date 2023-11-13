@@ -78,7 +78,8 @@ class _TodoTileState extends State<TodoTile> {
 
   @override
   Widget build(BuildContext context) {
-    print({'todos': widget.todos});
+    // Todo: Make tile non deletable on false click
+
     return Slidable(
         startActionPane:
             ActionPane(extentRatio: 0.2, motion: DrawerMotion(), children: [

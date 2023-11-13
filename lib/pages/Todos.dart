@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:doey/utils/Checktime.dart';
 import 'package:doey/utils/createTodoModal.dart';
+import 'package:doey/utils/utilityFunctions.dart';
 import 'package:doey/widgets/DOTW/dotw.dart';
 import 'package:doey/widgets/Global/constants.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
@@ -35,6 +36,7 @@ class _TodosState extends State<Todos> {
   String label = '';
   var User = 'User';
   List todoList = [];
+  List dates = [];
 
   checkFlag(flag) {
     tag = flag;
@@ -169,10 +171,20 @@ class _TodosState extends State<Todos> {
     setState(() {});
   }
 
-  getTodos() async {
+  getTodos(date) async {
     var todos = myBox.get('todoList');
-    if (todos != null) {
-      todoList = todos;
+    List newTodos = [];
+    for (var i = 0; i < todos.length; i++) {
+      if (date == DateTime.parse(todos[i]['date']).day.toString() ||
+          DateTime.parse(todos[i]['date']).day.toString() !=
+              DateTime.now().day.toString()) {
+        print({i: todos[i]});
+        newTodos.add(todos[i]);
+      }
+    }
+    if (newTodos != null) {
+      todoList = newTodos;
+      setState(() {});
     }
   }
 
@@ -180,7 +192,8 @@ class _TodosState extends State<Todos> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getTodos();
+    getTodos(DateTime.now().day.toString());
+    dates = getDays();
     getDetails();
   }
 
@@ -232,13 +245,19 @@ class _TodosState extends State<Todos> {
                     if (index == 0) {
                       return Padding(
                           padding: const EdgeInsets.only(bottom: 30.0, top: 5),
-                          child: DOTW());
+                          child: DOTW(
+                            dates: dates,
+                            func: getTodos,
+                          ));
                     }
                     if (index == 1) {
                       return Container(
-                        padding: EdgeInsets.only(left: 5, top: 5),
+                        padding: EdgeInsets.only(
+                          left: 5,
+                          top: 5,
+                        ),
                         alignment: Alignment.centerLeft,
-                        height: 50,
+                        height: 55,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
