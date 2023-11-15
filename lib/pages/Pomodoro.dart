@@ -1,5 +1,6 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:doey/pages/CountDown.dart';
 import 'package:doey/widgets/Global/constants.dart';
 import 'package:doey/widgets/Input/TextBox.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +18,10 @@ class _PomodoroState extends State<Pomodoro> {
   TextEditingController _taskDesc = TextEditingController();
 
   bool isTapped = false;
-  int hour = 1;
+  int hour = 0;
   int minutes = 0;
   List<bool> isSelected = List.generate(2, (index) => false);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,12 +75,13 @@ class _PomodoroState extends State<Pomodoro> {
                                     color: Colors.grey,
                                   ),
                                   bottom: BorderSide(color: Colors.grey))),
-                          minValue: 1,
+                          minValue: 0,
                           maxValue: 12,
                           value: hour,
                           onChanged: (value) {
                             setState(() {
                               hour = value;
+                              print(hour);
                             });
                           }),
                       NumberPicker(
@@ -98,7 +101,7 @@ class _PomodoroState extends State<Pomodoro> {
                                   ),
                                   bottom: BorderSide(color: Colors.grey))),
                           minValue: 0,
-                          maxValue: 12,
+                          maxValue: 60,
                           value: minutes,
                           onChanged: (value) {
                             setState(() {
@@ -109,14 +112,13 @@ class _PomodoroState extends State<Pomodoro> {
                         direction: Axis.vertical,
                         isSelected: isSelected,
                         selectedColor: Colors.white,
-                        fillColor: Colors.grey,
+                        fillColor: Colors.grey.shade400,
                         renderBorder: true,
                         borderWidth: 5,
                         borderColor: Colors.transparent,
                         selectedBorderColor: Colors.transparent,
                         disabledBorderColor: Colors.transparent,
                         onPressed: (int i) {
-                          int otherIndex = 0;
                           setState(() {
                             if (i == 0) {
                               isSelected[1] = false;
@@ -128,20 +130,18 @@ class _PomodoroState extends State<Pomodoro> {
                           });
                         },
                         children: [
-                          Container(
-                              child: Text(
+                          Text(
                             'AM',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w500,
                             ),
-                          )),
-                          Container(
-                              child: Text('PM',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w700,
-                                  ))),
+                          ),
+                          Text('PM',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                              )),
                         ],
                       )
                     ],
@@ -151,7 +151,15 @@ class _PomodoroState extends State<Pomodoro> {
           SizedBox(height: 20),
           Center(
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: ((context) => CountDown(
+                              hours: hour,
+                              mins: minutes,
+                            ))));
+              },
               style: ButtonStyle(
                   padding: MaterialStateProperty.all(
                       EdgeInsets.symmetric(horizontal: 50)),
