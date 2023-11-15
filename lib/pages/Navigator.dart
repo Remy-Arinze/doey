@@ -1,3 +1,4 @@
+import 'package:doey/pages/Pomodoro.dart';
 import 'package:doey/pages/Progress.dart';
 import 'package:doey/pages/Todos.dart';
 import 'package:doey/widgets/Global/constants.dart';
@@ -15,6 +16,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
   int current = 0;
   List pages = [
     Todos(),
+    Pomodoro(),
     ProgressScreen(),
   ];
 
@@ -27,6 +29,8 @@ class _BottomNavigatorState extends State<BottomNavigator> {
         items: const [
           BottomNavigationBarItem(
               icon: Icon(HeroIcons.check_badge), label: 'Todos'),
+          BottomNavigationBarItem(
+              icon: Icon(HeroIcons.clock), label: 'Pomodoro'),
           BottomNavigationBarItem(
               icon: Icon(EvaIcons.pie_chart_outline), label: 'Charts')
         ],

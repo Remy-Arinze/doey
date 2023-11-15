@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:doey/widgets/Global/constants.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 
@@ -57,12 +58,23 @@ class _ProgressScreenState extends State<ProgressScreen> {
                 ),
               ],
             ),
-            Icon(
-              EvaIcons.pie_chart_2,
-              size: 160,
-              color: kPrimaryColor,
+            SizedBox(
+              height: 200,
+              width: 200,
+              child: PieChart(
+                PieChartData(
+                    // read about it in the PieChartData section
+                    ),
+                swapAnimationDuration: Duration(milliseconds: 150), // Optional
+                swapAnimationCurve: Curves.linear, // Optional
+              ),
             )
           ]),
+          SizedBox(height: 80),
+          Icon(
+            EvaIcons.bar_chart,
+            size: 400,
+          )
         ]),
       ),
     );

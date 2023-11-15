@@ -50,10 +50,11 @@ class _TodosState extends State<Todos> {
 
   doTodo(todoIndex, value) {
     todoIndex['done'] = value;
+    Timer? timer;
 
     setState(() {
       if (value) {
-        Timer(
+        timer = Timer(
             Duration(
               seconds: 5,
             ), () async {
@@ -67,7 +68,10 @@ class _TodosState extends State<Todos> {
           }
         });
       }
-      print(value);
+      if (timer != null) {
+        print('timer not null');
+        timer!.cancel();
+      }
       return;
     });
   }
@@ -173,18 +177,29 @@ class _TodosState extends State<Todos> {
 
   getTodos(date) async {
     var todos = myBox.get('todoList');
+    var isToday = false;
     List newTodos = [];
-    for (var i = 0; i < todos.length; i++) {
-      if (date == DateTime.parse(todos[i]['date']).day.toString() ||
-          DateTime.parse(todos[i]['date']).day.toString() !=
-              DateTime.now().day.toString()) {
-        print({i: todos[i]});
-        newTodos.add(todos[i]);
+    List todaysTodos = [];
+    if (todos != null) {
+      for (var i = 0; i < todos.length; i++) {
+        if (date == DateTime.parse(todos[i]['date']).day.toString() &&
+            date != DateTime.now().day.toString()) {
+          isToday = false;
+          newTodos = [];
+          newTodos.add(todos[i]);
+        } else if (date == DateTime.parse(todos[i]['date']).day.toString() ||
+            date == DateTime.now().day.toString()) {
+          isToday = true;
+          todaysTodos.add(todos[i]);
+        }
       }
-    }
-    if (newTodos != null) {
-      todoList = newTodos;
-      setState(() {});
+      if (newTodos != null && isToday) {
+        todoList = todaysTodos;
+        setState(() {});
+      } else {
+        todoList = newTodos;
+        setState(() {});
+      }
     }
   }
 
@@ -192,6 +207,7 @@ class _TodosState extends State<Todos> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     getTodos(DateTime.now().day.toString());
     dates = getDays();
     getDetails();

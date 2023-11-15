@@ -145,9 +145,7 @@ class _modalContainerState extends State<modalContainer> {
             padding: EdgeInsets.symmetric(horizontal: 5),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10), color: Colors.white),
-            child: Column(children: [
-              TextBox(hint: 'Add todo', controller: widget.controller),
-            ]),
+            child: TextBox(hint: 'Add todo', controller: widget.controller),
           ),
           SizedBox(height: 30),
           Row(

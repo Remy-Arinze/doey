@@ -96,21 +96,6 @@ class _TodoTileState extends State<TodoTile> {
             foregroundColor: Colors.white,
           )
         ]),
-        endActionPane:
-            ActionPane(extentRatio: 0.2, motion: DrawerMotion(), children: [
-          SlidableAction(
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(10),
-              bottomRight: Radius.circular(10),
-            ),
-            onPressed: (context) {
-              widget.deleteTodos(widget.index);
-            },
-            backgroundColor: Color(0xFFFE4A49),
-            foregroundColor: Colors.white,
-            icon: Icons.delete,
-          )
-        ]),
         child: Container(
           margin: EdgeInsets.symmetric(vertical: 8),
           decoration: BoxDecoration(

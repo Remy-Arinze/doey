@@ -13,7 +13,10 @@ class TextBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 5),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10), color: Colors.white),
       width: MediaQuery.of(context).size.width,
       child: TextField(
         showCursor: true,

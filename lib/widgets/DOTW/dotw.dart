@@ -63,32 +63,38 @@ class DateTimeLine extends StatefulWidget {
 }
 
 class _DateTimeLineState extends State<DateTimeLine> {
-  var currentDate = DateTime.now().day.toString();
+  var currentDay = DateTime.now().weekday;
+  var changeColor = Colors.green;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     // Todo: Make days static
     return InkWell(
       onTap: () {
-        setState(() {
-          currentDate = widget.date;
-        });
+        currentDay = 1;
+        currentDay = widget.day;
         widget.func(widget.date);
       },
       child: Container(
-        height: currentDate == widget.date ? 42 : 40,
-        width: currentDate == widget.date ? 35 : 33,
+        height: currentDay == widget.day ? 42 : 40,
+        width: currentDay == widget.day ? 35 : 33,
         margin: EdgeInsets.symmetric(horizontal: 11),
         padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
         decoration: BoxDecoration(
-            color: currentDate == widget.date ? Colors.blueGrey : kAccentBtn,
+            color: currentDay == widget.day ? changeColor : kAccentBtn,
             borderRadius: BorderRadius.circular(10)),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               checkDay(widget.day,
-                  currentDate == widget.date ? Colors.white : Colors.black),
-              currentDate == widget.date
+                  currentDay == widget.day ? Colors.white : Colors.black),
+              currentDay == widget.day
                   ? Icon(
                       HeroIcons.check_badge,
                       size: 18,
@@ -98,7 +104,7 @@ class _DateTimeLineState extends State<DateTimeLine> {
                       widget.date,
                       style: TextStyle(
                           fontWeight: FontWeight.w400,
-                          color: currentDate == widget.date
+                          color: currentDay == widget.day
                               ? Colors.white
                               : kPrimaryColor,
                           fontSize: 10),
