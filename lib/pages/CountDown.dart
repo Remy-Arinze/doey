@@ -6,9 +6,9 @@ import 'package:doey/widgets/Global/constants.dart';
 import 'package:flutter/material.dart';
 
 class CountDown extends StatefulWidget {
-  var hours;
-  var mins;
-  CountDown({super.key, this.hours, this.mins});
+  int hours;
+  int mins;
+  CountDown({super.key, required this.hours, required this.mins});
 
   @override
   State<CountDown> createState() => _CountDownState();
@@ -17,12 +17,29 @@ class CountDown extends StatefulWidget {
 class _CountDownState extends State<CountDown> {
   Timer? timer;
   bool isPaused = false;
+  int secs = 0;
   startCountDown() {
+    setState(() {
+      secs = 60;
+    });
+
     timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        widget.mins = widget.mins - 1;
-        print(widget.mins);
-      });
+      if (mounted) {
+        setState(() {
+          secs--;
+          if (secs == 0 && widget.mins > 0) {
+            secs = 60;
+            widget.mins = widget.mins - 1;
+            print(widget.mins);
+          } else if (widget.mins == 0 && widget.hours > 0) {
+            secs = 60;
+            widget.hours = widget.hours - 1;
+          } else if (widget.mins == 0 && widget.hours == 0) {
+            secs = 0;
+            pauseCountDown();
+          }
+        });
+      }
     });
   }
 
@@ -74,13 +91,14 @@ class _CountDownState extends State<CountDown> {
                 width: MediaQuery.of(context).size.width * 0.52,
                 height: MediaQuery.of(context).size.height * 0.25,
                 child: CircularProgressIndicator(
-                  value: 10,
+                  value: secs / 60,
+                  backgroundColor: kAccentBtn,
                   color: kPrimaryColor,
                   strokeWidth: 15,
                 ),
               ),
               Text(
-                '${widget.hours.toString().padLeft(2, '0')}:${widget.mins < 10 ? widget.mins.toString().padLeft(2, '0') : widget.mins}',
+                '${widget.hours.toString().padLeft(2, '0')}:${widget.mins < 10 ? widget.mins.toString().padLeft(2, '0') : widget.mins}:${secs < 10 ? secs.toString().padLeft(2, '0') : secs}',
                 style: TextStyle(fontSize: 35),
               )
             ]),
