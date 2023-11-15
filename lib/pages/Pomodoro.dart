@@ -108,17 +108,23 @@ class _PomodoroState extends State<Pomodoro> {
                       ToggleButtons(
                         direction: Axis.vertical,
                         isSelected: isSelected,
+                        selectedColor: Colors.white,
+                        fillColor: Colors.grey,
                         renderBorder: true,
                         borderWidth: 5,
-                        borderColor: Colors.white,
+                        borderColor: Colors.transparent,
+                        selectedBorderColor: Colors.transparent,
+                        disabledBorderColor: Colors.transparent,
                         onPressed: (int i) {
                           int otherIndex = 0;
                           setState(() {
-                            i == 0 ? otherIndex = 1 : 0;
-                            isSelected[i] = !isSelected[i];
-                            isSelected[otherIndex] = !isSelected[otherIndex];
-                            print({i: isSelected[i]});
-                            print({otherIndex: isSelected[otherIndex]});
+                            if (i == 0) {
+                              isSelected[1] = false;
+                              isSelected[i] = !isSelected[i];
+                            } else {
+                              isSelected[0] = false;
+                              isSelected[i] = !isSelected[i];
+                            }
                           });
                         },
                         children: [
