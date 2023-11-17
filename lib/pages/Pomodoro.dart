@@ -108,42 +108,6 @@ class _PomodoroState extends State<Pomodoro> {
                               minutes = value;
                             });
                           }),
-                      ToggleButtons(
-                        direction: Axis.vertical,
-                        isSelected: isSelected,
-                        selectedColor: Colors.white,
-                        fillColor: Colors.grey.shade400,
-                        renderBorder: true,
-                        borderWidth: 5,
-                        borderColor: Colors.transparent,
-                        selectedBorderColor: Colors.transparent,
-                        disabledBorderColor: Colors.transparent,
-                        onPressed: (int i) {
-                          setState(() {
-                            if (i == 0) {
-                              isSelected[1] = false;
-                              isSelected[i] = !isSelected[i];
-                            } else {
-                              isSelected[0] = false;
-                              isSelected[i] = !isSelected[i];
-                            }
-                          });
-                        },
-                        children: [
-                          Text(
-                            'AM',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          Text('PM',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w700,
-                              )),
-                        ],
-                      )
                     ],
                   ),
                 )

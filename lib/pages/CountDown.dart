@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'dart:async';
+import 'dart:math';
 
 import 'package:doey/widgets/Global/constants.dart';
 import 'package:flutter/material.dart';
@@ -91,7 +92,7 @@ class _CountDownState extends State<CountDown> {
                 width: MediaQuery.of(context).size.width * 0.52,
                 height: MediaQuery.of(context).size.height * 0.25,
                 child: CircularProgressIndicator(
-                  value: secs / 60,
+                  value: secs / (60 * widget.mins) + 0.5,
                   backgroundColor: kAccentBtn,
                   color: kPrimaryColor,
                   strokeWidth: 15,

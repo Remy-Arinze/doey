@@ -65,6 +65,7 @@ class DateTimeLine extends StatefulWidget {
 class _DateTimeLineState extends State<DateTimeLine> {
   var currentDay = DateTime.now().weekday;
   var changeColor = Colors.green;
+  var previousColor = kAccentBtn;
 
   @override
   void initState() {
