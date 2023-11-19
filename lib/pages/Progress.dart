@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:doey/utils/constants.dart';
+import 'package:doey/utils/utilityFunctions.dart';
 import 'package:doey/widgets/Global/constants.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -105,20 +106,53 @@ class _ProgressScreenState extends State<ProgressScreen> {
           SizedBox(
             height: mediaSize(context).height * 0.4,
             width: mediaSize(context).width,
-            child: BarChart(BarChartData(barGroups: [
-              BarChartGroupData(x: 1, barRods: [
-                BarChartRodData(
-                    toY: 7,
-                    backDrawRodData: BackgroundBarChartRodData(
-                        color: Colors.red, fromY: 2.0)),
-              ]),
-              BarChartGroupData(x: 3, barRods: [
-                BarChartRodData(
-                    toY: 5,
-                    backDrawRodData: BackgroundBarChartRodData(
-                        color: Colors.red, fromY: 2.0)),
-              ]),
-            ])),
+            child: BarChart(BarChartData(
+                alignment: BarChartAlignment.center,
+                titlesData: FlTitlesData(
+                  rightTitles: AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  topTitles: AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      reservedSize: 30,
+                      getTitlesWidget: bottomTitle,
+                    ),
+                  ),
+                  leftTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                        showTitles: true,
+                        getTitlesWidget: leftTitle,
+                        reservedSize: 50),
+                  ),
+                ),
+                gridData: FlGridData(
+                    show: true,
+                    drawHorizontalLine: false,
+                    drawVerticalLine: false,
+                    checkToShowHorizontalLine: ((value) {
+                      print({'value': value});
+
+                      return false;
+                    })),
+                borderData: FlBorderData(show: false),
+                barGroups: [
+                  BarChartGroupData(x: 1, barRods: [
+                    BarChartRodData(
+                        toY: 7,
+                        backDrawRodData: BackgroundBarChartRodData(
+                            color: Colors.red, fromY: 2.0)),
+                  ]),
+                  BarChartGroupData(x: 2, barRods: [
+                    BarChartRodData(
+                        toY: 3,
+                        backDrawRodData: BackgroundBarChartRodData(
+                            color: Colors.red, fromY: 2.0)),
+                  ]),
+                ])),
           )
         ]),
       ),

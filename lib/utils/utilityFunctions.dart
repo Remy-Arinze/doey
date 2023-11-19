@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:doey/widgets/Global/constants.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:moment_dart/moment_dart.dart';
 
@@ -101,4 +102,87 @@ checkDay(day, color) {
       style: TextStyle(fontWeight: FontWeight.w400, color: color, fontSize: 10),
     );
   }
+}
+
+Widget bottomTitle(double value, TitleMeta meta) {
+  String text = '';
+  switch (value.toInt()) {
+    case 0:
+      text = 'sun';
+      break;
+
+    case 1:
+      text = 'mon';
+      break;
+
+    case 2:
+      text = 'tues';
+      break;
+
+    case 4:
+      text = 'wed';
+      break;
+
+    case 5:
+      text = 'thu';
+      break;
+
+    case 6:
+      text = 'fri';
+      break;
+
+    case 7:
+      text = 'sat';
+      break;
+  }
+
+  return SideTitleWidget(
+      axisSide: meta.axisSide,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+        child: Text(
+          text,
+          style: TextStyle(),
+        ),
+      ));
+}
+
+Widget leftTitle(double value, TitleMeta meta) {
+  String text = '';
+  switch (value.toInt()) {
+    case 0:
+      text = '10';
+      break;
+
+    case 1:
+      text = '20';
+      break;
+
+    case 2:
+      text = '30';
+      break;
+
+    case 4:
+      text = '50%';
+      break;
+
+    case 5:
+      text = '70%';
+      break;
+
+    case 6:
+      text = '80%';
+      break;
+
+    case 7:
+      text = '100%';
+      break;
+  }
+
+  return SideTitleWidget(
+      axisSide: meta.axisSide,
+      child: Text(
+        text,
+        style: TextStyle(),
+      ));
 }
