@@ -225,7 +225,7 @@ class _TodosState extends State<Todos> {
       openScale: 1.0,
       disabledGestures: false,
       childDecoration: const BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(16)),
+        borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
       child: Scaffold(
         backgroundColor: kAccentColor,
@@ -268,12 +268,9 @@ class _TodosState extends State<Todos> {
                     }
                     if (index == 1) {
                       return Container(
-                        padding: EdgeInsets.only(
-                          left: 5,
-                          top: 5,
-                        ),
+                        padding: EdgeInsets.only(left: 5, top: 5),
                         alignment: Alignment.centerLeft,
-                        height: 55,
+                        height: 60,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -282,9 +279,7 @@ class _TodosState extends State<Todos> {
                               style: TextStyle(
                                   fontSize: 12, color: Colors.blueGrey),
                             ),
-                            SizedBox(
-                              height: 5,
-                            ),
+                            SizedBox(height: 5),
                             timeOfDay(User),
                           ],
                         ),

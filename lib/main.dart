@@ -3,6 +3,7 @@
 import 'package:doey/Adapters/Links.dart';
 import 'package:doey/pages/AddNote.dart';
 import 'package:doey/pages/Navigator.dart';
+import 'package:doey/pages/Progress.dart';
 import 'package:doey/pages/SplashScreen.dart';
 import 'package:doey/pages/Todos.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
           appBarTheme: AppBarTheme(
             elevation: 0,
           )),
-      home: SplashScreen(),
+      home: ProgressScreen(),
       routes: {
         '/addTodo': (context) => AddTodo(),
         '/todos': (context) => Todos(),

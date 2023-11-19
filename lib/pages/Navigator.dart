@@ -30,7 +30,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
           BottomNavigationBarItem(
               icon: Icon(HeroIcons.check_badge), label: 'Todos'),
           BottomNavigationBarItem(
-              icon: Icon(HeroIcons.clock), label: 'Pomodoro'),
+              icon: Icon(FontAwesome.bars_staggered), label: 'Pomodoro'),
           BottomNavigationBarItem(
               icon: Icon(EvaIcons.pie_chart_outline), label: 'Charts')
         ],
@@ -39,7 +39,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
             current = value;
           });
         },
-        selectedItemColor: Colors.green[400],
+        selectedItemColor: Colors.black,
         showSelectedLabels: true,
         showUnselectedLabels: false,
         currentIndex: current,

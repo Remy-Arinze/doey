@@ -122,12 +122,13 @@ class _PomodoroState extends State<Pomodoro> {
                         builder: ((context) => CountDown(
                               hours: hour,
                               mins: minutes,
+                              task: _taskName.text,
                             ))));
               },
               style: ButtonStyle(
                   padding: MaterialStateProperty.all(
                       EdgeInsets.symmetric(horizontal: 50)),
-                  backgroundColor: MaterialStateProperty.all(kPrimaryColor)),
+                  backgroundColor: MaterialStateProperty.all(Colors.black)),
               child: Text('Start'),
             ),
           )

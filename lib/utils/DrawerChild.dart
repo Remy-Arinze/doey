@@ -170,7 +170,7 @@ class _drawerChildState extends State<drawerChild> {
           ],
         ),
         SizedBox(
-          height: 50,
+          height: 30,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

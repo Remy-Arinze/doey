@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:doey/utils/constants.dart';
 import 'package:doey/widgets/Global/constants.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -24,22 +25,17 @@ class _ProgressScreenState extends State<ProgressScreen> {
         backgroundColor: Colors.transparent,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-        child: Column(children: [
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(
+            'Today',
+            style: TextStyle(fontSize: 16, color: Colors.grey.shade500),
+          ),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.baseline,
               textBaseline: TextBaseline.alphabetic,
               children: [
-                SizedBox(height: 18),
-                Text(
-                  'Today',
-                  style: TextStyle(
-                    color: kPrimaryColor,
-                    fontSize: 18,
-                  ),
-                ),
-                SizedBox(height: 15),
                 ChartDesc(
                   title: 'All',
                   color: Colors.grey,
@@ -63,17 +59,66 @@ class _ProgressScreenState extends State<ProgressScreen> {
               width: 200,
               child: PieChart(
                 PieChartData(
-                    // read about it in the PieChartData section
-                    ),
+                    pieTouchData: PieTouchData(
+                        enabled: true,
+                        touchCallback: (event, response) {
+                          print({event: response});
+                        }),
+                    centerSpaceRadius: 50,
+                    // readss about it in the PieChartData section
+                    sections: [
+                      PieChartSectionData(
+                          radius: 30,
+                          badgeWidget: Icon(EvaIcons.person),
+                          value: 20,
+                          color: Colors.green,
+                          showTitle: false,
+                          title: 'Personal'),
+                      PieChartSectionData(
+                          value: 10,
+                          badgeWidget: Icon(EvaIcons.edit),
+                          color: Colors.blue,
+                          showTitle: false,
+                          title: 'Study'),
+                      PieChartSectionData(
+                          value: 5,
+                          color: Colors.red,
+                          showTitle: true,
+                          title: 'Work'),
+                      PieChartSectionData(
+                          value: 50,
+                          color: Colors.yellow,
+                          showTitle: true,
+                          title: 'Tuesday'),
+                    ]),
                 swapAnimationDuration: Duration(milliseconds: 150), // Optional
                 swapAnimationCurve: Curves.linear, // Optional
               ),
             )
           ]),
           SizedBox(height: 80),
-          Icon(
-            EvaIcons.bar_chart,
-            size: 400,
+          Text(
+            'This week',
+            style: TextStyle(fontSize: 16, color: Colors.grey.shade500),
+          ),
+          SizedBox(height: 30),
+          SizedBox(
+            height: mediaSize(context).height * 0.4,
+            width: mediaSize(context).width,
+            child: BarChart(BarChartData(barGroups: [
+              BarChartGroupData(x: 1, barRods: [
+                BarChartRodData(
+                    toY: 7,
+                    backDrawRodData: BackgroundBarChartRodData(
+                        color: Colors.red, fromY: 2.0)),
+              ]),
+              BarChartGroupData(x: 3, barRods: [
+                BarChartRodData(
+                    toY: 5,
+                    backDrawRodData: BackgroundBarChartRodData(
+                        color: Colors.red, fromY: 2.0)),
+              ]),
+            ])),
           )
         ]),
       ),

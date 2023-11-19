@@ -3,13 +3,16 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:doey/utils/constants.dart';
 import 'package:doey/widgets/Global/constants.dart';
 import 'package:flutter/material.dart';
 
 class CountDown extends StatefulWidget {
   int hours;
   int mins;
-  CountDown({super.key, required this.hours, required this.mins});
+  String task;
+  CountDown(
+      {super.key, required this.hours, this.task = '', required this.mins});
 
   @override
   State<CountDown> createState() => _CountDownState();
@@ -45,7 +48,7 @@ class _CountDownState extends State<CountDown> {
   }
 
   pauseCountDown() {
-    if (timer!.isActive) {
+    if (timer != null && timer!.isActive) {
       timer!.cancel();
       setState(() {
         isPaused = true;
@@ -62,7 +65,7 @@ class _CountDownState extends State<CountDown> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer(Duration(seconds: 3), () {
+    Timer(Duration(seconds: 1), () {
       startCountDown();
     });
   }
@@ -70,52 +73,53 @@ class _CountDownState extends State<CountDown> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('focus'),
-        backgroundColor: Colors.white,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back_ios_new_outlined,
-            color: Colors.black,
-          ),
-        ),
-      ),
+      appBar: kAppbar('Focus'),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Stack(alignment: Alignment.center, children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.52,
-                height: MediaQuery.of(context).size.height * 0.25,
-                child: CircularProgressIndicator(
-                  value: secs / (60 * widget.mins) + 0.5,
-                  backgroundColor: kAccentBtn,
-                  color: kPrimaryColor,
-                  strokeWidth: 15,
-                ),
-              ),
-              Text(
-                '${widget.hours.toString().padLeft(2, '0')}:${widget.mins < 10 ? widget.mins.toString().padLeft(2, '0') : widget.mins}:${secs < 10 ? secs.toString().padLeft(2, '0') : secs}',
-                style: TextStyle(fontSize: 35),
-              )
-            ]),
             SizedBox(
               height: 30,
             ),
-            ElevatedButton(
-              onPressed: () {
-                pauseCountDown();
-              },
-              style: ButtonStyle(
-                  padding: MaterialStateProperty.all(
-                      EdgeInsets.symmetric(horizontal: 50)),
-                  backgroundColor: MaterialStateProperty.all(Colors.black)),
-              child: Text(isPaused ? 'Resume' : 'Pause'),
-            )
+            Text(
+              widget.task,
+              style: TextStyle(color: Colors.black, fontSize: 14),
+            ),
+            SizedBox(
+              height: 170,
+            ),
+            Column(
+              children: [
+                Stack(alignment: Alignment.center, children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.52,
+                    height: MediaQuery.of(context).size.height * 0.25,
+                    child: CircularProgressIndicator(
+                      value: secs / 60,
+                      backgroundColor: kAccentBtn,
+                      color: kPrimaryColor,
+                      strokeWidth: 15,
+                    ),
+                  ),
+                  Text(
+                    '${widget.hours.toString().padLeft(2, '0')}:${widget.mins < 10 ? widget.mins.toString().padLeft(2, '0') : widget.mins}:${secs < 10 ? secs.toString().padLeft(2, '0') : secs}',
+                    style: TextStyle(fontSize: 35),
+                  )
+                ]),
+                SizedBox(
+                  height: 30,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    pauseCountDown();
+                  },
+                  style: ButtonStyle(
+                      padding: MaterialStateProperty.all(
+                          EdgeInsets.symmetric(horizontal: 50)),
+                      backgroundColor: MaterialStateProperty.all(Colors.black)),
+                  child: Text(isPaused ? 'Resume' : 'Pause'),
+                )
+              ],
+            ),
           ],
         ),
       ),
