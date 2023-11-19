@@ -116,34 +116,31 @@ Widget bottomTitle(double value, TitleMeta meta) {
       break;
 
     case 2:
-      text = 'tues';
+      text = 'tue';
       break;
 
-    case 4:
+    case 3:
       text = 'wed';
       break;
 
-    case 5:
+    case 4:
       text = 'thu';
       break;
 
-    case 6:
+    case 5:
       text = 'fri';
       break;
 
-    case 7:
+    case 6:
       text = 'sat';
       break;
   }
 
   return SideTitleWidget(
       axisSide: meta.axisSide,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 18.0),
-        child: Text(
-          text,
-          style: TextStyle(),
-        ),
+      child: Text(
+        text,
+        style: TextStyle(),
       ));
 }
 
@@ -151,30 +148,30 @@ Widget leftTitle(double value, TitleMeta meta) {
   String text = '';
   switch (value.toInt()) {
     case 0:
-      text = '10';
+      text = '15%';
       break;
 
     case 1:
-      text = '20';
+      text = '30%';
       break;
 
     case 2:
-      text = '30';
+      text = '45%';
+      break;
+
+    case 3:
+      text = '60%';
       break;
 
     case 4:
-      text = '50%';
+      text = '75%';
       break;
 
     case 5:
-      text = '70%';
+      text = '90%';
       break;
 
     case 6:
-      text = '80%';
-      break;
-
-    case 7:
       text = '100%';
       break;
   }

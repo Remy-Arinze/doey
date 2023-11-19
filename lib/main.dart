@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
           appBarTheme: AppBarTheme(
             elevation: 0,
           )),
-      home: ProgressScreen(),
+      home: SplashScreen(),
       routes: {
         '/addTodo': (context) => AddTodo(),
         '/todos': (context) => Todos(),

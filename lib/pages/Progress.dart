@@ -17,6 +17,7 @@ class ProgressScreen extends StatefulWidget {
 class _ProgressScreenState extends State<ProgressScreen> {
   @override
   Widget build(BuildContext context) {
+    double barWidth = 15;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -61,10 +62,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
               child: PieChart(
                 PieChartData(
                     pieTouchData: PieTouchData(
-                        enabled: true,
-                        touchCallback: (event, response) {
-                          print({event: response});
-                        }),
+                        enabled: true, touchCallback: (event, response) {}),
                     centerSpaceRadius: 50,
                     // readss about it in the PieChartData section
                     sections: [
@@ -97,14 +95,19 @@ class _ProgressScreenState extends State<ProgressScreen> {
               ),
             )
           ]),
-          SizedBox(height: 80),
+          SizedBox(height: 20),
+          Divider(
+            color: const Color.fromARGB(137, 46, 46, 46),
+            height: 4,
+          ),
+          SizedBox(height: 20),
           Text(
             'This week',
             style: TextStyle(fontSize: 16, color: Colors.grey.shade500),
           ),
           SizedBox(height: 30),
           SizedBox(
-            height: mediaSize(context).height * 0.4,
+            height: mediaSize(context).height * 0.25,
             width: mediaSize(context).width,
             child: BarChart(BarChartData(
                 alignment: BarChartAlignment.center,
@@ -130,27 +133,43 @@ class _ProgressScreenState extends State<ProgressScreen> {
                   ),
                 ),
                 gridData: FlGridData(
-                    show: true,
-                    drawHorizontalLine: false,
-                    drawVerticalLine: false,
-                    checkToShowHorizontalLine: ((value) {
-                      print({'value': value});
-
-                      return false;
-                    })),
-                borderData: FlBorderData(show: false),
+                  show: true,
+                  drawHorizontalLine: false,
+                  checkToShowHorizontalLine: ((value) => value % 10 == 0),
+                ),
+                borderData: FlBorderData(
+                    show: false,
+                    border: Border(
+                        left: BorderSide(color: kPrimaryColor),
+                        bottom: BorderSide(color: kPrimaryColor))),
                 barGroups: [
                   BarChartGroupData(x: 1, barRods: [
                     BarChartRodData(
-                        toY: 7,
-                        backDrawRodData: BackgroundBarChartRodData(
-                            color: Colors.red, fromY: 2.0)),
+                      toY: 5,
+                      color: Colors.black,
+                      width: barWidth,
+                    )
                   ]),
                   BarChartGroupData(x: 2, barRods: [
+                    BarChartRodData(toY: 3, width: barWidth),
+                  ]),
+                  BarChartGroupData(x: 3, barRods: [
                     BarChartRodData(
-                        toY: 3,
-                        backDrawRodData: BackgroundBarChartRodData(
-                            color: Colors.red, fromY: 2.0)),
+                      width: barWidth,
+                      toY: 5,
+                    ),
+                  ]),
+                  BarChartGroupData(x: 4, barRods: [
+                    BarChartRodData(toY: 7, width: barWidth),
+                  ]),
+                  BarChartGroupData(x: 5, barRods: [
+                    BarChartRodData(toY: 3, width: barWidth),
+                  ]),
+                  BarChartGroupData(x: 6, barRods: [
+                    BarChartRodData(toY: 2, width: barWidth),
+                  ]),
+                  BarChartGroupData(x: 7, barRods: [
+                    BarChartRodData(toY: 0, width: barWidth),
                   ]),
                 ])),
           )
