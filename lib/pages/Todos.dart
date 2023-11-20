@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
 import 'dart:async';
 
+import 'package:doey/pages/Input.dart';
 import 'package:doey/utils/Checktime.dart';
 import 'package:doey/utils/createTodoModal.dart';
 import 'package:doey/utils/utilityFunctions.dart';
@@ -287,14 +288,23 @@ class _TodosState extends State<Todos> {
                     }
                     return GestureDetector(
                       onTap: () {
-                        showModal(context,
-                            index: index - 2,
-                            todoList: todoList[index - 2],
-                            updateTodos: updateTodos,
-                            addTodo: addTodo,
-                            updateDateTime: updateDateTime,
-                            controller: _controller,
-                            checkFlag: checkFlag);
+                        // showModal(context,
+                        //     index: index - 2,
+                        //     todoList: todoList[index - 2],
+                        //     updateTodos: updateTodos,
+                        //     addTodo: addTodo,
+                        //     updateDateTime: updateDateTime,
+                        //     controller: _controller,
+                        //     checkFlag: checkFlag);
+                        MaterialPageRoute(
+                            builder: (context) => InputScreen(
+                                index: index - 2,
+                                todoList: todoList[index - 2],
+                                updateTodo: updateTodos,
+                                addTodo: addTodo,
+                                updateDateTime: updateDateTime,
+                                controller: _controller,
+                                updateFlag: checkFlag));
                       },
                       child: TodoTile(
                           archiveTodos: archiveTodos,
@@ -312,11 +322,21 @@ class _TodosState extends State<Todos> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: kPrimaryColor,
           onPressed: () {
-            showModal(context,
-                controller: _controller,
-                updateDateTime: updateDateTime,
-                checkFlag: checkFlag,
-                addTodo: addTodo);
+            // showModal(context,
+            //     controller: _controller,
+            //     updateDateTime: updateDateTime,
+            //     checkFlag: checkFlag,
+            //     addTodo: addTodo);\
+
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => InputScreen(
+                          controller: _controller,
+                          addTodo: addTodo,
+                          updateDateTime: updateDateTime,
+                          updateFlag: checkFlag,
+                        )));
           },
           child: const Icon(Icons.add),
         ),
