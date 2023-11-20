@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:doey/utils/Checktime.dart';
 import 'package:doey/utils/constants.dart';
 import 'package:doey/widgets/Global/constants.dart';
 import 'package:doey/widgets/Input/TextBox.dart';
@@ -43,6 +44,7 @@ class _InputScreenState extends State<InputScreen> {
   Color tomorrowTextColor = Colors.black;
 
   var selectedDate;
+  var seletedTime = TimeOfDay.now();
   String dateString = 'Today';
 
   getDate() async {
@@ -64,10 +66,27 @@ class _InputScreenState extends State<InputScreen> {
           dateString = 'Tomorrow';
         } else {
           dateString = '${selectedDate.toString().substring(0, 10)}';
-          print({DateTime.now().toIso8601String(), selectedDate});
         }
       });
     } else {}
+  }
+
+  getTime() async {
+    var time = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
+        confirmText: 'Add time',
+        routeSettings: RouteSettings(name: 'Hello'),
+        initialEntryMode: TimePickerEntryMode.dialOnly);
+
+    if (time != null) {
+      print(time);
+      setState(() {
+        seletedTime = time;
+      });
+    } else {
+      print('null');
+    }
   }
 
   selectButtons(btnValue) {
@@ -165,12 +184,18 @@ class _InputScreenState extends State<InputScreen> {
               children: [
                 DateTImeSelector(
                   title: 'Date',
+                  icon: Icons.calendar_month_rounded,
+                  iconColor: Colors.red,
                   sub: dateString,
                   func: getDate,
                 ),
                 Divider(height: 2, color: Colors.grey),
                 DateTImeSelector(
-                    title: 'Date', sub: '${TimeOfDay.now().format(context)}'),
+                  title: 'Date',
+                  icon: EvaIcons.clock,
+                  sub: '${seletedTime.format(context)}',
+                  func: getTime,
+                ),
               ],
             ),
           ),
@@ -203,6 +228,33 @@ class _InputScreenState extends State<InputScreen> {
             ),
           ),
           SizedBox(height: 30),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.6,
+            child: ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.black),
+                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0))),
+              ),
+              onPressed: () {
+                if (widget.todoList == null) {
+                  if (widget.controller.text.isNotEmpty) {
+                    widget.addTodo();
+
+                    Navigator.pop(context);
+                  }
+                } else {
+                  widget.updateTodo(widget.index);
+
+                  Navigator.pop(context);
+                }
+              },
+              child: Text(
+                'Done',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          )
         ]),
       ),
     );
@@ -236,9 +288,16 @@ class _InputScreenState extends State<InputScreen> {
 class DateTImeSelector extends StatelessWidget {
   String title;
   String sub;
+  IconData icon;
+  Color iconColor;
   var func;
   DateTImeSelector(
-      {super.key, required this.title, required this.sub, this.func});
+      {super.key,
+      required this.title,
+      required this.sub,
+      this.func,
+      required this.icon,
+      this.iconColor = Colors.black});
 
   @override
   Widget build(BuildContext context) {
@@ -247,7 +306,7 @@ class DateTImeSelector extends StatelessWidget {
         func();
       },
       child: ListTile(
-        leading: Icon(Icons.calendar_month_rounded, color: Colors.red),
+        leading: Icon(icon, color: iconColor),
         title: Text(title),
         subtitle: Text(
           sub,
