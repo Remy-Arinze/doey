@@ -34,8 +34,8 @@ class InputScreen extends StatefulWidget {
 }
 
 class _InputScreenState extends State<InputScreen> {
-  Color colorUrgent = Colors.grey.shade200;
-  Color colorImportant = Colors.grey.shade200;
+  Color colorUrgent = kAccentBtn;
+  Color colorImportant = kAccentBtn;
   Color colorToday = kAccentBtn;
   Color colorTommorow = kAccentBtn;
   Color textColorImportant = Colors.black;
@@ -44,7 +44,7 @@ class _InputScreenState extends State<InputScreen> {
   Color tomorrowTextColor = Colors.black;
 
   var selectedDate;
-  var seletedTime = TimeOfDay.now();
+  var seletedTime;
   String dateString = 'Today';
 
   getDate() async {
@@ -58,7 +58,7 @@ class _InputScreenState extends State<InputScreen> {
       setState(() {
         selectedDate = pickDate.toIso8601String();
 
-        widget.updateDateTime(selectedDate);
+        widget.updateDateTime(selectedDate, true);
         if (selectedDate == DateTime.now().date.toIso8601String()) {
           dateString = 'Today';
         } else if (selectedDate ==
@@ -71,7 +71,7 @@ class _InputScreenState extends State<InputScreen> {
     } else {}
   }
 
-  getTime() async {
+  getTime(ctx) async {
     var time = await showTimePicker(
         context: context,
         initialTime: TimeOfDay.now(),
@@ -80,9 +80,10 @@ class _InputScreenState extends State<InputScreen> {
         initialEntryMode: TimePickerEntryMode.dialOnly);
 
     if (time != null) {
-      print(time);
       setState(() {
-        seletedTime = time;
+        seletedTime = time.format(ctx);
+
+        widget.updateDateTime(seletedTime, false);
       });
     } else {
       print('null');
@@ -191,10 +192,10 @@ class _InputScreenState extends State<InputScreen> {
                 ),
                 Divider(height: 2, color: Colors.grey),
                 DateTImeSelector(
-                  title: 'Date',
+                  title: 'Time',
                   icon: EvaIcons.clock,
-                  sub: '${seletedTime.format(context)}',
-                  func: getTime,
+                  sub: '${seletedTime}',
+                  func: () => getTime(context),
                 ),
               ],
             ),
@@ -227,7 +228,7 @@ class _InputScreenState extends State<InputScreen> {
               ],
             ),
           ),
-          SizedBox(height: 30),
+          SizedBox(height: 50),
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.6,
             child: ElevatedButton(
@@ -240,6 +241,7 @@ class _InputScreenState extends State<InputScreen> {
                 if (widget.todoList == null) {
                   if (widget.controller.text.isNotEmpty) {
                     widget.addTodo();
+                    print({seletedTime: selectedDate});
 
                     Navigator.pop(context);
                   }

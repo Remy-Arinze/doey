@@ -43,8 +43,8 @@ class _TodosState extends State<Todos> {
     tag = flag;
   }
 
-  updateDateTime(dt) {
-    date = dt;
+  updateDateTime(dt, isDate) {
+    isDate ? date = dt : time = dt;
   }
 
   selectDate() {}
@@ -55,6 +55,7 @@ class _TodosState extends State<Todos> {
 
     setState(() {
       if (value) {
+        print({'here': 'we are here'});
         timer = Timer(
             Duration(
               seconds: 5,
@@ -69,7 +70,7 @@ class _TodosState extends State<Todos> {
           }
         });
       }
-      if (timer != null) {
+      if (timer != null && value == false) {
         print('timer not null');
         timer!.cancel();
       }
@@ -210,12 +211,14 @@ class _TodosState extends State<Todos> {
     super.initState();
 
     getTodos(DateTime.now().day.toString());
+    // print(todoList);
     dates = getDays();
     getDetails();
   }
 
   @override
   Widget build(BuildContext context) {
+    time = TimeOfDay.now().format(context).toString();
     return AdvancedDrawer(
       backdropColor: kBackgroundColor,
       controller: _advancedDrawerController,

@@ -6,29 +6,56 @@ import 'package:flutter/material.dart';
 import 'package:moment_dart/moment_dart.dart';
 
 Widget formatDate({todos}) {
+  bool isTodoOverdue = false;
+  Moment(DateTime.parse(todos['date'])) < Moment(DateTime.now().date)
+      ? isTodoOverdue = true
+      : false;
   if (Moment(DateTime.parse(todos['date'])) == Moment(DateTime.now().date)) {
-    return const Text(
-      'Today',
-      style: TextStyle(fontSize: 12),
+    return DateText(
+      title: 'Today',
+      isTodoOverdue: isTodoOverdue,
+      time: todos['time'].toString(),
     );
   } else if (Moment(DateTime.parse(todos['date'])) ==
       Moment(DateTime.now().add(const Duration(days: 1)).date)) {
-    return const Text(
-      'Tommorow',
-      style: TextStyle(fontSize: 12),
+    return DateText(
+        title: 'tomorrow',
+        isTodoOverdue: isTodoOverdue,
+        time: todos['time'].toString());
+  }
+  return DateText(
+      title: '${Moment(DateTime.parse(todos['date'])).LL}',
+      isTodoOverdue: isTodoOverdue,
+      time: todos['time'].toString());
+}
+
+class DateText extends StatelessWidget {
+  String title;
+  String time;
+  bool isTodoOverdue;
+  DateText({
+    super.key,
+    required this.title,
+    required this.time,
+    required this.isTodoOverdue,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    print(time);
+    return Text(
+      '${title}, ${time}',
+      style: TextStyle(
+          fontSize: 12, color: isTodoOverdue ? Colors.red : Colors.grey),
     );
   }
-  return Text(
-    '${Moment(DateTime.parse(todos['date'])).LL}',
-    style: const TextStyle(fontSize: 12),
-  );
 }
 
 Widget isTodoOverdue(i, {isOverdue, todos, index}) {
   if (Moment(DateTime.parse(todos['date'])) < Moment(DateTime.now().date)) {
     isOverdue(index);
-    return const Text(
-      'Overdue',
+    return Text(
+      '${todos['time']}',
       style: TextStyle(
           fontSize: 13, color: Colors.red, fontWeight: FontWeight.w500),
     );

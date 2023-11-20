@@ -49,9 +49,9 @@ class _TodoTileState extends State<TodoTile> {
     if (widget.isDone) {
       return IconButton(
           onPressed: () async {
-            widget.changeValue(widget.todos, false);
+            await widget.changeValue(widget.todos, false);
 
-            doneTodos.remove(widget.todos);
+            await doneTodos.remove(widget.todos);
             await doneBox.put('DoneTodos', Links(doneTodos, false));
 
             setState(() {});
@@ -68,6 +68,7 @@ class _TodoTileState extends State<TodoTile> {
           borderRadius: BorderRadius.all(Radius.circular(30)),
         ),
         onChanged: (value) {
+          print({"here": value});
           widget.changeValue(widget.todos, value);
           doneTodos.add(widget.todos);
           doneBox.put('DoneTodos', Links(doneTodos, false));
@@ -114,15 +115,9 @@ class _TodoTileState extends State<TodoTile> {
                   decoration:
                       widget.isDone ? TextDecoration.lineThrough : null),
             ),
-            subtitle: Column(children: [
-              Row(children: [
-                formatDate(todos: widget.todos),
-                SizedBox(width: 60),
-                isTodoOverdue(widget.index,
-                    todos: widget.todos,
-                    index: widget.index,
-                    isOverdue: widget.isOverdue)
-              ]),
+            subtitle:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              formatDate(todos: widget.todos),
               widget.label != ''
                   ? Row(
                       children: [
