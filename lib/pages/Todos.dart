@@ -47,8 +47,6 @@ class _TodosState extends State<Todos> {
     isDate ? date = dt : time = dt;
   }
 
-  selectDate() {}
-
   doTodo(todoIndex, value) {
     todoIndex['done'] = value;
     Timer? timer;
@@ -239,7 +237,7 @@ class _TodosState extends State<Todos> {
               },
               icon: Icon(
                 EvaIcons.grid_outline,
-                color: kPrimaryColor,
+                color: Colors.black,
               )),
         ),
         body: Container(
@@ -320,7 +318,7 @@ class _TodosState extends State<Todos> {
                   })),
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: kPrimaryColor,
+          backgroundColor: Colors.black,
           onPressed: () {
             // showModal(context,
             //     controller: _controller,

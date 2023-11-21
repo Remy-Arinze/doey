@@ -73,6 +73,7 @@ List getDays() {
   // ignore: unused_local_variable
   for (var i = 0; i < 7; i++) {
     final date = DateTime.now().add(Duration(days: i));
+    print(date.weekday);
     Map weekDay = {'day': date.weekday, 'date': date.day};
     dates.add(weekDay);
   }

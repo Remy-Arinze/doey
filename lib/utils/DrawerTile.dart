@@ -63,25 +63,28 @@ class _DrawerTileState extends State<DrawerTile>
                       )));
         },
         child: Card(
-          color: kPrimaryColor,
+          color: Colors.black,
           child: ListTile(
             horizontalTitleGap: 1,
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 10,
-                  child: Text(
-                    '3',
-                    style: TextStyle(color: kPrimaryColor),
+            title: Padding(
+              padding: const EdgeInsets.only(top: 5.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 10,
+                    child: Text(
+                      '3',
+                      style: TextStyle(color: kPrimaryColor),
+                    ),
                   ),
-                ),
-                SizedBox(height: 8),
-                Text(widget.title,
-                    style: const TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w500)),
-              ],
+                  SizedBox(height: 8),
+                  Text(widget.title,
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w500)),
+                ],
+              ),
             ),
           ),
         ),

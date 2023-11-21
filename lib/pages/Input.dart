@@ -225,13 +225,13 @@ class _InputScreenState extends State<InputScreen> {
                 ),
                 SizedBox(width: 20),
                 selectButton(
-                    width: 68.0,
+                    width: 90.0,
                     title: 'Urgent',
                     textColor: textColorUrgent,
                     color: colorUrgent),
-                SizedBox(width: 18),
+                SizedBox(width: 20),
                 selectButton(
-                    width: 80.0,
+                    width: 100.0,
                     title: 'Important',
                     textColor: textColorImportant,
                     color: colorImportant),
@@ -260,7 +260,8 @@ class _InputScreenState extends State<InputScreen> {
           ),
           SizedBox(height: 50),
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.6,
+            width: MediaQuery.of(context).size.width * 0.9,
+            height: 48,
             child: ElevatedButton(
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.black),
@@ -282,7 +283,10 @@ class _InputScreenState extends State<InputScreen> {
               },
               child: Text(
                 'Done',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600),
               ),
             ),
           )
@@ -293,13 +297,13 @@ class _InputScreenState extends State<InputScreen> {
 
   Widget selectButton({
     String title = '',
-    Color textColor = Colors.black,
+    Color textColor = Colors.grey,
     color,
     width,
   }) {
     return SizedBox(
       width: width,
-      height: 20.0,
+      height: 25.0,
       child: ElevatedButton(
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(color),
@@ -309,7 +313,7 @@ class _InputScreenState extends State<InputScreen> {
         },
         child: Text(
           title,
-          style: TextStyle(color: textColor, fontSize: 10),
+          style: TextStyle(color: textColor, fontSize: 14),
         ),
       ),
     );
@@ -338,7 +342,9 @@ class DateTImeSelector extends StatelessWidget {
       },
       child: ListTile(
         leading: Icon(icon, color: iconColor),
-        title: Text(title),
+        title: Text(
+          title,
+        ),
         subtitle: Text(
           sub,
           style: TextStyle(color: kPrimaryColor, fontSize: 11),
