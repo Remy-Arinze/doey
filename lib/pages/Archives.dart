@@ -167,7 +167,6 @@ class _ArchiveState extends State<Archive> {
                 itemBuilder: ((context, index) {
                   return todos[index]['label'] == widget.label
                       ? TodoTile(
-                          isOverdue: reshuffleOverDueTodos,
                           isDone: todos[index]['done'],
                           archiveTodos: archiveTodos,
                           label: todos[index]['label'],
@@ -180,7 +179,6 @@ class _ArchiveState extends State<Archive> {
                 itemBuilder: ((context, index) {
                   print('object');
                   return TodoTile(
-                      isOverdue: reshuffleOverDueTodos,
                       tagColor: widget.tagColor,
                       archiveTodos: archiveTodos,
                       isDone: todos[index]['done'],

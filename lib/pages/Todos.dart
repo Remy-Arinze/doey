@@ -55,7 +55,6 @@ class _TodosState extends State<Todos> {
 
     setState(() {
       if (value) {
-        print({'here': 'we are here'});
         timer = Timer(
             Duration(
               seconds: 5,
@@ -71,7 +70,6 @@ class _TodosState extends State<Todos> {
         });
       }
       if (timer != null && value == false) {
-        print('timer not null');
         timer!.cancel();
       }
       return;
@@ -315,7 +313,6 @@ class _TodosState extends State<Todos> {
                           tag: todoList[index - 2]['tag'],
                           label: todoList[index - 2]['label'],
                           changeValue: doTodo,
-                          isOverdue: reshuffleOverDueTodos,
                           isDone: todoList[index - 2]['done'],
                           deleteTodos: deleteTodos,
                           todos: todoList[index - 2]),

@@ -97,9 +97,7 @@ class _LabelPageState extends State<LabelPage> {
                 itemBuilder: ((context, index) {
                   return todos[index]['label'] == widget.appBarTitle
                       ? TodoTile(
-                          isOverdue: reshuffleOverDueTodos,
-                          isDone: todos[index]['done'],
-                          todos: todos[index])
+                          isDone: todos[index]['done'], todos: todos[index])
                       : Container();
                 }))),
         floatingActionButton: FloatingActionButton(

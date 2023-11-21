@@ -14,7 +14,7 @@ import 'package:moment_dart/moment_dart.dart';
 class TodoTile extends StatefulWidget {
   var isDone;
   var archiveTodos;
-  var isOverdue;
+
   var index;
   var tagColor;
   String label;
@@ -25,7 +25,6 @@ class TodoTile extends StatefulWidget {
     this.index,
     this.tag,
     this.tagColor,
-    this.isOverdue = false,
     required this.isDone,
     this.label = '',
     this.deleteTodos,
@@ -68,7 +67,6 @@ class _TodoTileState extends State<TodoTile> {
           borderRadius: BorderRadius.all(Radius.circular(30)),
         ),
         onChanged: (value) {
-          print({"here": value});
           widget.changeValue(widget.todos, value);
           doneTodos.add(widget.todos);
           doneBox.put('DoneTodos', Links(doneTodos, false));
@@ -117,7 +115,7 @@ class _TodoTileState extends State<TodoTile> {
             ),
             subtitle:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              formatDate(todos: widget.todos),
+              formatDate(todos: widget.todos, ctx: context),
               widget.label != ''
                   ? Row(
                       children: [

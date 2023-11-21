@@ -45,6 +45,10 @@ class _InputScreenState extends State<InputScreen> {
 
   var selectedDate;
   var seletedTime;
+  selectTime(ctx) {
+    seletedTime = TimeOfDay.now().format(ctx);
+  }
+
   String dateString = 'Today';
 
   getDate() async {
@@ -155,6 +159,13 @@ class _InputScreenState extends State<InputScreen> {
         });
       }
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // selectTime(context);
   }
 
   @override

@@ -5,8 +5,9 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:moment_dart/moment_dart.dart';
 
-Widget formatDate({todos}) {
+Widget formatDate({todos, ctx}) {
   bool isTodoOverdue = false;
+
   Moment(DateTime.parse(todos['date'])) < Moment(DateTime.now().date)
       ? isTodoOverdue = true
       : false;
@@ -49,19 +50,6 @@ class DateText extends StatelessWidget {
           fontSize: 12, color: isTodoOverdue ? Colors.red : Colors.grey),
     );
   }
-}
-
-Widget isTodoOverdue(i, {isOverdue, todos, index}) {
-  if (Moment(DateTime.parse(todos['date'])) < Moment(DateTime.now().date)) {
-    isOverdue(index);
-    return Text(
-      '${todos['time']}',
-      style: TextStyle(
-          fontSize: 13, color: Colors.red, fontWeight: FontWeight.w500),
-    );
-  }
-
-  return const SizedBox();
 }
 
 Widget checktag(tag) {

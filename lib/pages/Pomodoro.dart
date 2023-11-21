@@ -33,7 +33,7 @@ class _PomodoroState extends State<Pomodoro> {
         backgroundColor: Colors.transparent,
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10.0),
+        padding: EdgeInsets.symmetric(horizontal: 15.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(
             'New task',
