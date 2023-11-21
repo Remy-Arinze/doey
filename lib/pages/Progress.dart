@@ -67,35 +67,37 @@ class _ProgressScreenState extends State<ProgressScreen> {
                     // readss about it in the PieChartData section
                     sections: [
                       PieChartSectionData(
-                          radius: 30,
-                          badgeWidget: Icon(EvaIcons.person),
-                          value: 20,
-                          color: Colors.green,
-                          showTitle: false,
-                          title: 'Personal'),
+                        radius: 30,
+                        badgeWidget: Icon(EvaIcons.person),
+                        value: 20,
+                        color: Colors.green,
+                        showTitle: false,
+                      ),
                       PieChartSectionData(
                           value: 10,
-                          badgeWidget: Icon(EvaIcons.edit),
+                          badgeWidget: Icon(Icons.edit),
                           color: Colors.blue,
                           showTitle: false,
                           title: 'Study'),
                       PieChartSectionData(
-                          value: 5,
-                          color: Colors.red,
-                          showTitle: true,
-                          title: 'Work'),
+                        value: 15,
+                        color: Colors.red,
+                        showTitle: false,
+                        badgeWidget: Icon(EvaIcons.file),
+                      ),
                       PieChartSectionData(
-                          value: 50,
-                          color: Colors.yellow,
-                          showTitle: true,
-                          title: 'Tuesday'),
+                        value: 50,
+                        color: Colors.yellow,
+                        showTitle: true,
+                        badgeWidget: Icon(EvaIcons.activity),
+                      ),
                     ]),
                 swapAnimationDuration: Duration(milliseconds: 150), // Optional
                 swapAnimationCurve: Curves.linear, // Optional
               ),
             )
           ]),
-          SizedBox(height: 20),
+          SizedBox(height: 15),
           Divider(
             color: const Color.fromARGB(137, 46, 46, 46),
             height: 4,

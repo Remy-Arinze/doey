@@ -176,14 +176,14 @@ class _InputScreenState extends State<InputScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
         child: Column(children: [
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 5),
+            padding: EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10), color: Colors.white),
             child: Column(
               children: [
                 TextBox(hint: 'Add todo', controller: widget.controller),
                 Divider(height: 2, color: Colors.grey),
-                TextBox(hint: 'Add todo', controller: widget.controller),
+                TextBox(hint: 'Note', controller: widget.controller),
               ],
             ),
           ),
@@ -213,7 +213,7 @@ class _InputScreenState extends State<InputScreen> {
           ),
           SizedBox(height: 30),
           Container(
-            padding: EdgeInsets.symmetric(vertical: 20),
+            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10), color: Colors.white),
             child: Row(
@@ -239,6 +239,25 @@ class _InputScreenState extends State<InputScreen> {
               ],
             ),
           ),
+          SizedBox(height: 30),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10), color: Colors.white),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Icon(Icons.recycling_rounded, color: Colors.grey),
+                SizedBox(width: 35),
+                Text(
+                  'Repeat',
+                  style: TextStyle(color: kAccentBtn),
+                ),
+                SizedBox(width: mediaSize(context).width * 0.40),
+                Text('Daily >', style: TextStyle(color: Colors.grey.shade600))
+              ],
+            ),
+          ),
           SizedBox(height: 50),
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.6,
@@ -252,7 +271,6 @@ class _InputScreenState extends State<InputScreen> {
                 if (widget.todoList == null) {
                   if (widget.controller.text.isNotEmpty) {
                     widget.addTodo();
-                    print({seletedTime: selectedDate});
 
                     Navigator.pop(context);
                   }
