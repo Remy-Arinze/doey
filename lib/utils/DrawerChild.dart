@@ -145,9 +145,15 @@ class _drawerChildState extends State<drawerChild> {
           ],
         ),
         SizedBox(
-          height: 30,
+          height: 5,
         ),
+        Divider(
+          color: const Color.fromARGB(255, 87, 87, 87),
+          height: 10,
+        ),
+        SizedBox(height: 20),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             DrawerTile(
               isDone: true,
@@ -169,9 +175,7 @@ class _drawerChildState extends State<drawerChild> {
             ),
           ],
         ),
-        SizedBox(
-          height: 30,
-        ),
+        SizedBox(height: 30),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -207,7 +211,7 @@ class _drawerChildState extends State<drawerChild> {
                             });
                   },
                   child: Container(
-                    margin: EdgeInsets.only(bottom: 5),
+                    margin: EdgeInsets.only(bottom: 10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: Color.fromARGB(255, 255, 255, 255),
@@ -244,9 +248,9 @@ class _drawerChildState extends State<drawerChild> {
               scrollDirection: Axis.horizontal,
               itemCount: labelArray.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisSpacing: 10,
+                  crossAxisSpacing: 5,
                   crossAxisCount: 3,
-                  mainAxisSpacing: 20,
+                  mainAxisSpacing: 10,
                   childAspectRatio: 0.5),
               itemBuilder: (context, index) {
                 return Center(

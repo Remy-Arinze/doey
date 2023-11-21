@@ -1,3 +1,5 @@
+// ignore_for_file: sort_child_properties_last
+
 import 'package:doey/utils/constants.dart';
 import 'package:doey/widgets/Global/constants.dart';
 import 'package:flutter/material.dart';
@@ -21,72 +23,38 @@ class DrawerTile extends StatefulWidget {
   State<DrawerTile> createState() => _DrawerTileState();
 }
 
-class _DrawerTileState extends State<DrawerTile>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation _fadeAnimation;
-
-  animate() {
-    _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 500));
-    _fadeAnimation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(_controller);
-
-    _controller.addListener(() {
-      setState(() {});
-    });
-    _controller.forward();
-  }
-
+class _DrawerTileState extends State<DrawerTile> {
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    animate();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: InkWell(
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => Archive(
-                        boxKey: widget.isDone ? 'Links' : 'Archives',
-                        box: widget.isDone ? 'DoneTodos' : 'archiveList',
-                        label: widget.isDone ? 'Completed' : 'Archived',
-                        appBarTitle: widget.isDone ? 'Completed' : 'Archived',
-                      )));
-        },
-        child: Card(
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Archive(
+                      boxKey: widget.isDone ? 'Links' : 'Archives',
+                      box: widget.isDone ? 'DoneTodos' : 'archiveList',
+                      label: widget.isDone ? 'Completed' : 'Archived',
+                      appBarTitle: widget.isDone ? 'Completed' : 'Archived',
+                    )));
+      },
+      child: Container(
+        width: mediaSize(context).width * 0.33,
+        height: 40,
+        child: Center(
+          child: Text(widget.title,
+              style: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.w500)),
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
           color: Colors.black,
-          child: ListTile(
-            horizontalTitleGap: 1,
-            title: Padding(
-              padding: const EdgeInsets.only(top: 5.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 10,
-                    child: Text(
-                      '3',
-                      style: TextStyle(color: kPrimaryColor),
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(widget.title,
-                      style: const TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.w500)),
-                ],
-              ),
-            ),
-          ),
         ),
       ),
     );

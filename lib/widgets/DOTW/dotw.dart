@@ -16,6 +16,7 @@ class DOTW extends StatefulWidget {
 
 class _DOTWState extends State<DOTW> {
   List dates = [];
+  bool isSelected = false;
 
   List<Widget> renderDates(func) {
     List<Widget> dayDates = [];
@@ -28,6 +29,7 @@ class _DOTWState extends State<DOTW> {
 
       dayDates.add(widget);
     }
+
     return dayDates;
   }
 
@@ -78,8 +80,6 @@ class _DateTimeLineState extends State<DateTimeLine> {
     // Todo: Make days static
     return InkWell(
       onTap: () {
-        currentDay = 1;
-        currentDay = widget.day;
         widget.func(widget.date);
       },
       child: Container(
@@ -104,7 +104,7 @@ class _DateTimeLineState extends State<DateTimeLine> {
                   : Text(
                       widget.date,
                       style: TextStyle(
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w700,
                           color: currentDay == widget.day
                               ? Colors.white
                               : Colors.black,
