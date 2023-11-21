@@ -246,15 +246,38 @@ class _TodosState extends State<Todos> {
           ),
           padding: const EdgeInsets.only(top: 10.0, right: 20, left: 20),
           child: todoList.isEmpty
-              ? Center(
-                  child: Row(
+              ? Column(children: [
+                  DOTW(
+                    dates: dates,
+                    func: getTodos,
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 25),
+                    padding: EdgeInsets.only(left: 5, top: 5),
+                    alignment: Alignment.centerLeft,
+                    height: 60,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Today ${DateTime.now().toString().substring(0, 10)}',
+                          style:
+                              TextStyle(fontSize: 12, color: Colors.blueGrey),
+                        ),
+                        SizedBox(height: 5),
+                        timeOfDay(User),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: mediaSize(context).height * 0.25),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(Icons.add),
                       Text('You have no todos '),
                     ],
                   ),
-                )
+                ])
               : ListView.builder(
                   itemCount: todoList.length + 2,
                   itemBuilder: ((context, index) {
@@ -287,14 +310,6 @@ class _TodosState extends State<Todos> {
                     }
                     return GestureDetector(
                       onTap: () {
-                        // showModal(context,
-                        //     index: index - 2,
-                        //     todoList: todoList[index - 2],
-                        //     updateTodos: updateTodos,
-                        //     addTodo: addTodo,
-                        //     updateDateTime: updateDateTime,
-                        //     controller: _controller,
-                        //     checkFlag: checkFlag);
                         MaterialPageRoute(
                             builder: (context) => InputScreen(
                                 index: index - 2,

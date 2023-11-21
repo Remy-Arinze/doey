@@ -83,7 +83,7 @@ class _DateTimeLineState extends State<DateTimeLine> {
         widget.func(widget.date);
       },
       child: Container(
-        height: currentDay == widget.day ? 42 : 40,
+        height: currentDay == widget.day ? 50 : 40,
         width: currentDay == widget.day ? 35 : 33,
         margin: EdgeInsets.symmetric(horizontal: 11),
         padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
@@ -104,10 +104,10 @@ class _DateTimeLineState extends State<DateTimeLine> {
                   : Text(
                       widget.date,
                       style: TextStyle(
-                          fontWeight: FontWeight.w400,
+                          fontWeight: FontWeight.w500,
                           color: currentDay == widget.day
                               ? Colors.white
-                              : kPrimaryColor,
+                              : Colors.black,
                           fontSize: 10),
                     ),
             ]),
