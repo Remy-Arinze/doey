@@ -219,7 +219,7 @@ class _drawerChildState extends State<drawerChild> {
                     child: ListTile(
                       title: Text(
                         '${projects[index]['title']}',
-                        style: TextStyle(color: Colors.red),
+                        style: TextStyle(color: Colors.black),
                       ),
                       trailing: Text('${projects[index]['todos'].length}'),
                     ),
