@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:doey/pages/CountDown.dart';
+import 'package:doey/utils/constants.dart';
 import 'package:doey/widgets/Global/constants.dart';
 import 'package:doey/widgets/Input/TextBox.dart';
 import 'package:flutter/material.dart';
@@ -81,7 +82,6 @@ class _PomodoroState extends State<Pomodoro> {
                           onChanged: (value) {
                             setState(() {
                               hour = value;
-                              print(hour);
                             });
                           }),
                       NumberPicker(
@@ -112,8 +112,10 @@ class _PomodoroState extends State<Pomodoro> {
                   ),
                 )
               : SizedBox(),
-          SizedBox(height: 20),
-          Center(
+          SizedBox(height: 40),
+          SizedBox(
+            width: mediaSize(context).width * 0.9,
+            height: 45,
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -129,7 +131,10 @@ class _PomodoroState extends State<Pomodoro> {
                   padding: MaterialStateProperty.all(
                       EdgeInsets.symmetric(horizontal: 50)),
                   backgroundColor: MaterialStateProperty.all(Colors.black)),
-              child: Text('Start'),
+              child: Text(
+                'Start',
+                style: TextStyle(fontSize: 18),
+              ),
             ),
           )
         ]),
